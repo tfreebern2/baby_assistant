@@ -1,8 +1,8 @@
 import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
 
-class NapStatus {
-  NapStatus({
+class NapActivity {
+  NapActivity({
     @required this.date,
     @required this.startTime,
     @required this.endTime,

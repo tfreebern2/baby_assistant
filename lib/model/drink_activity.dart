@@ -1,8 +1,8 @@
 import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
 
-class DrinkStatus {
-  DrinkStatus({
+class DrinkActivity {
+  DrinkActivity({
     @required this.date,
     @required this.startTime,
     @required this.endTime,

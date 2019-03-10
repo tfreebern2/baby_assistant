@@ -1,8 +1,8 @@
 import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
 
-class ChangeStatus {
-  ChangeStatus(
+class ChangeActivity {
+  ChangeActivity(
       {@required this.date,
       @required this.time,
       @required this.description,
