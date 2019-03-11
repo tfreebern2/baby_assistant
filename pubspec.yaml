@@ -10,7 +10,7 @@ description: A Flutter app to record diaper and feeding times of your baby
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -21,11 +21,9 @@ dependencies:
   cupertino_icons: ^0.1.2
 
   # Custom Packages
-  intl: ^0.15.7
-  scoped_model: ^1.0.1
-  shared_preferences: ^0.4.3
   sqflite: ^1.1.1
   path_provider: ^0.5.0+1
+  intl: ^0.15.7
 
 
 dev_dependencies:
@@ -48,6 +46,8 @@ flutter:
   # assets:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
+#  assets:
+#    - assets/babyassistant_db.db
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
