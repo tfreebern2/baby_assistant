@@ -1,48 +1,43 @@
-import 'package:baby_assistant/model/ate_activity.dart';
-import 'package:baby_assistant/model/change_activity.dart';
-import 'package:baby_assistant/model/drink_activity.dart';
-import 'package:baby_assistant/model/nap_activity.dart';
-
 class Routine {
   int _id;
-  DateTime _date;
-  AteActivity _ateStatusId;
-  DrinkActivity _drinkStatusId;
-  NapActivity _napStatusId;
-  ChangeActivity _changeStatusId;
+  String _date;
+  int _ateActivityId;
+  int _drinkActivityId;
+  int _napActivityId;
+  int _changeActivityId;
 
-  Routine(this._id, this._date, this._ateStatusId, this._drinkStatusId,
-      this._napStatusId, this._changeStatusId);
+  Routine(this._date, this._ateActivityId, this._drinkActivityId,
+      this._napActivityId, this._changeActivityId);
 
   Routine.map(dynamic obj) {
     this._date = obj["date"];
-    this._ateStatusId = obj["ateStatus"];
-    this._drinkStatusId = obj["drinkStatus"];
-    this._napStatusId = obj["napStatus"];
-    this._changeStatusId = obj["changeStatus"];
+    this._ateActivityId = obj["ateActivity"];
+    this._drinkActivityId = obj["drinkActivity"];
+    this._napActivityId = obj["napActivity"];
+    this._changeActivityId = obj["changeActivity"];
     this._id = obj["id"];
   }
 
   // Getters
-  DateTime get date => _date;
+  String get date => _date;
 
-  AteActivity get ateStatus => _ateStatusId;
+  int get ateActivity => _ateActivityId;
 
-  DrinkActivity get drinkStatus => _drinkStatusId;
+  int get drinkActivity => _drinkActivityId;
 
-  NapActivity get napStatus => _napStatusId;
+  int get napActivity => _napActivityId;
 
-  ChangeActivity get changeStatus => _changeStatusId;
+  int get changeActivity => _changeActivityId;
 
   int get id => _id;
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
     map["date"] = _date;
-    map["ate_status_id"] = _ateStatusId;
-    map["drink_status_id"] = _drinkStatusId;
-    map["nap_status_id"] = _napStatusId;
-    map["change_status_id"] = _changeStatusId;
+    map["ate_activity_id"] = _ateActivityId;
+    map["drink_activity_id"] = _drinkActivityId;
+    map["nap_activity_id"] = _napActivityId;
+    map["change_activity_id"] = _changeActivityId;
 
     if (_id != null) {
       map["id"] = _id;
@@ -53,10 +48,10 @@ class Routine {
 
   Routine.fromMap(Map<String, dynamic> map) {
     this._date = map["date"];
-    this._ateStatusId = map["ate_status_id"];
-    this._drinkStatusId = map["drink_status_id"];
-    this._napStatusId = map["nap_status_id"];
-    this._changeStatusId = map["change_status_id"];
+    this._ateActivityId = map["ate_activity_id"];
+    this._drinkActivityId = map["drink_activity_id"];
+    this._napActivityId = map["nap_activity_id"];
+    this._changeActivityId = map["change_activity_id"];
     this._id = map["id"];
   }
 }
