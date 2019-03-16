@@ -15,7 +15,7 @@ class DatabaseHelper {
   final String columnId = "id";
   final String columnFirstName = "first_name";
   final String columnBirthdate = "birthdate";
-  final String columnRoutineId = "routine_id";
+  final String columnChildId = "child_id";
 
   final String tableRoutine = "routineTable";
   final String columnDate = "date";
@@ -50,7 +50,7 @@ class DatabaseHelper {
   initDB() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentDirectory.path,
-        "baby2.db"); //home://directory/files/notodo_db.db
+        "baby3.db"); //home://directory/files/notodo_db.db
 
     var ourDB = await openDatabase(path, version: 1, onCreate: _onCreate);
     return ourDB;
@@ -58,11 +58,9 @@ class DatabaseHelper {
 
   void _onCreate(Database db, int version) async {
     await db.execute(
-        "CREATE TABLE $tableChild(id INTEGER PRIMARY KEY, $columnFirstName TEXT, $columnBirthdate TEXT, "
-        "$columnRoutineId INTEGER NOT NULL, FOREIGN KEY (routine_id) REFERENCES routine (id) "
-        "ON DELETE NO ACTION ON UPDATE NO ACTION)");
+        "CREATE TABLE $tableChild(id INTEGER PRIMARY KEY, $columnFirstName TEXT, $columnBirthdate TEXT)");
     await db.execute(
-        "CREATE TABLE $tableRoutine(id INTEGER PRIMARY KEY, $columnDate TEXT, "
+        "CREATE TABLE $tableRoutine(id INTEGER PRIMARY KEY, $columnChildId INTEGER, $columnDate TEXT, "
         "$columnAteActivityId INTEGER, $columnDrinkActivityId INTEGER, "
         "$columnNapActivityId INTEGER, $columnChangeActivityId INTEGER)");
     await db.execute(
@@ -71,15 +69,12 @@ class DatabaseHelper {
         "$columnUnit TEXT)");
   }
 
-  // CRUD
-  // Insert
   Future<int> saveChild(Child child) async {
     var dbClient = await db;
     int result = await dbClient.insert("$tableChild", child.toMap());
     return result;
   }
 
-  // Get Items
   Future<List> getChildren() async {
     var dbClient = await db;
     var result = await dbClient
@@ -87,14 +82,12 @@ class DatabaseHelper {
     return result.toList();
   }
 
-  // Get Count of Items
   Future<int> getChildCount() async {
     var dbClient = await db;
     return Sqflite.firstIntValue(
         await dbClient.rawQuery("SELECT COUNT(*) FROM $tableChild"));
   }
 
-  // Get Item
   Future<Child> getChild(int id) async {
     var dbClient = await db;
     var result = await dbClient
@@ -104,14 +97,12 @@ class DatabaseHelper {
     return Child.fromMap(result.first);
   }
 
-  // Delete Item
   Future<int> deleteChild(int id) async {
     var dbClient = await db;
     return await dbClient
         .delete(tableChild, where: "$columnId = ?", whereArgs: [id]);
   }
 
-  // Update Item
   Future<int> updateChild(Child item) async {
     var dbClient = await db;
     return await dbClient.update(tableChild, item.toMap(),

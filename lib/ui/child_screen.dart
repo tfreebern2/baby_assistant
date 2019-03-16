@@ -1,6 +1,5 @@
 import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/util/database_client.dart';
-import 'package:baby_assistant/util/database_client.dart';
 import 'package:flutter/material.dart';
 
 class ChildScreen extends StatefulWidget {
