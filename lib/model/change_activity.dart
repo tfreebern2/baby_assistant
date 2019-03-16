@@ -9,10 +9,10 @@ class ChangeActivity {
       @required this.condition});
 
   // date of change
-  final DateTime date;
+  final int date;
 
   // time of change
-  final DateTime time;
+  final int time;
 
   // description of change
   final String description;

@@ -1,33 +1,60 @@
-import 'package:meta/meta.dart';
-import 'package:flutter/material.dart';
-
 class DrinkActivity {
-  DrinkActivity({
-    @required this.date,
-    @required this.startTime,
-    @required this.endTime,
-    @required this.description,
-    @required this.amount,
-    @required this.unit,
-  });
 
-  // date of drinking
-  final DateTime date;
+  DrinkActivity(this._date, this._startTime, this._endTime, this._description,
+    this._amount, this._unit);
 
-  // start of drinking
-  final DateTime startTime;
+  int _id;
+  String _date;
+  String _startTime;
+  String _endTime;
+  String _description;
+  String _amount;
+  Unit _unit;
 
-  // end of drinking
-  final DateTime endTime;
+  DrinkActivity.map(dynamic obj) {
+    this._date = obj["date"];
+    this._startTime = obj["start_time"];
+    this._endTime = obj["end_time"];
+    this._description = obj["description"];
+    this._amount = obj["amount"];
+    this._unit = obj["unit"];
 
-  // description
-  final String description;
+    this._id = obj["id"];
+  }
 
-  // numerical amount drank
-  final int amount;
+  String get date => _date;
+  String get startTime => _startTime;
+  String get endTime => _endTime;
+  String get description => _description;
+  String get amount => _amount;
+  Unit get unit => _unit;
 
-  // unit of measurement
-  final Unit unit;
+  Map<String, dynamic> toMap() {
+    var map = new Map<String, dynamic>();
+    map["date"] = _date;
+    map["start_time"] = _startTime;
+    map["end_time"] =_endTime;
+    map["description"] = _description;
+    map["amount"] = _amount;
+    map["unit"] = _unit;
+
+    if (_id != null) {
+      map["id"] = _id;
+    }
+
+    return map;
+  }
+
+  DrinkActivity.fromMap(Map<String, dynamic> map) {
+    this._date = map["date"];
+    this._startTime = map["start_time"];
+    this._endTime = map["end_time"];
+    this._description = map["description"];
+    this._amount = map["amount"];
+    this._unit = map["unit"];
+    this._id = map["id"];
+  }
+
 }
 
 enum Unit { ounce }

@@ -6,7 +6,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
-
 class DatabaseHelper {
   static final DatabaseHelper _instance = new DatabaseHelper.internal();
 
@@ -25,6 +24,15 @@ class DatabaseHelper {
   final String columnNapActivityId = "nap_activity_id";
   final String columnChangeActivityId = "change_activity_id";
 
+  final String tableDrinkActivity = "drinkActivityTable";
+
+  // id
+  // date
+  final String columnStartTime = "start_time";
+  final String columnEndTime = "end_time";
+  final String columnDescription = "description";
+  final String columnAmount = "amount";
+  final String columnUnit = "unit";
 
   static Database _db;
 
@@ -42,7 +50,7 @@ class DatabaseHelper {
   initDB() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentDirectory.path,
-        "baby1.db"); //home://directory/files/notodo_db.db
+        "baby2.db"); //home://directory/files/notodo_db.db
 
     var ourDB = await openDatabase(path, version: 1, onCreate: _onCreate);
     return ourDB;
@@ -51,12 +59,16 @@ class DatabaseHelper {
   void _onCreate(Database db, int version) async {
     await db.execute(
         "CREATE TABLE $tableChild(id INTEGER PRIMARY KEY, $columnFirstName TEXT, $columnBirthdate TEXT, "
-            "$columnRoutineId INTEGER NOT NULL, FOREIGN KEY (routine_id) REFERENCES routine (id) "
-            "ON DELETE NO ACTION ON UPDATE NO ACTION)");
+        "$columnRoutineId INTEGER NOT NULL, FOREIGN KEY (routine_id) REFERENCES routine (id) "
+        "ON DELETE NO ACTION ON UPDATE NO ACTION)");
     await db.execute(
-        "CREATE TABLE $tableRoutine(id INTEGER PRIMARY KEY, $columnDate INTEGER NOT NULL, "
-            "$columnAteActivityId INTEGER NOT NULL, $columnDrinkActivityId INTEGER NOT NULL, "
-            "$columnNapActivityId INTEGER NOT NULL, $columnChangeActivityId INTEGER NOT NULL)");
+        "CREATE TABLE $tableRoutine(id INTEGER PRIMARY KEY, $columnDate TEXT, "
+        "$columnAteActivityId INTEGER, $columnDrinkActivityId INTEGER, "
+        "$columnNapActivityId INTEGER, $columnChangeActivityId INTEGER)");
+    await db.execute(
+        "CREATE TABLE $tableDrinkActivity(id INTEGER PRIMARY KEY, $columnDate TEXT, "
+        "$columnStartTime TEXT, $columnEndTime TEXT, $columnDescription TEXT, $columnAmount TEXT, "
+        "$columnUnit TEXT)");
   }
 
   // CRUD
@@ -70,8 +82,8 @@ class DatabaseHelper {
   // Get Items
   Future<List> getChildren() async {
     var dbClient = await db;
-    var result = await dbClient.rawQuery(
-        "SELECT * FROM $tableChild ORDER BY $columnFirstName ASC");
+    var result = await dbClient
+        .rawQuery("SELECT * FROM $tableChild ORDER BY $columnFirstName ASC");
     return result.toList();
   }
 
