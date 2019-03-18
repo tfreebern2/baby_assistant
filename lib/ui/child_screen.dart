@@ -1,4 +1,5 @@
 import 'package:baby_assistant/model/child.dart';
+import 'package:baby_assistant/ui/child_detail_screen.dart';
 import 'package:baby_assistant/util/database_client.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,6 @@ class _ChildScreenState extends State<ChildScreen> {
   var db = new DatabaseHelper();
   final List<Child> _childList = <Child>[];
   final _textEditingController = new TextEditingController();
-
 
   @override
   void initState() {
@@ -45,6 +45,14 @@ class _ChildScreenState extends State<ChildScreen> {
                 return Card(
                   child: ListTile(
                     title: _childList[index],
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ChildDetailScreen(child: _childList[index]),
+                          ));
+                    },
                   ),
                 );
               },
