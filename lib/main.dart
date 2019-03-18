@@ -1,14 +1,15 @@
 import 'package:baby_assistant/ui/home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-void main() => runApp(BabyAssistant());
-// {
-//  SystemChrome.setPreferredOrientations([
-//    DeviceOrientation.portraitUp,
-//    DeviceOrientation.portraitDown,
-//  ]);
-// }
+void main() {
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
 
+  runApp(BabyAssistant());
+}
 
 class BabyAssistant extends StatelessWidget {
   @override

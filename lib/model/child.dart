@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Child extends StatelessWidget{
+class Child extends StatelessWidget {
   int _id;
   String _firstName;
 
@@ -14,6 +14,7 @@ class Child extends StatelessWidget{
 
   // Getters
   String get firstName => _firstName;
+
   int get id => _id;
 
   Map<String, dynamic> toMap() {
@@ -39,18 +40,30 @@ class Child extends StatelessWidget{
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                _firstName,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.9),
+          Padding(
+            padding: EdgeInsets.all(5.0),
+            child: Container(
+              alignment: Alignment.center,
+              child: Text(
+                _firstName.substring(0, 1),
+                style: TextStyle(color: Colors.white),
               ),
-            ],
+              height: 30.0,
+              width: 30.0,
+              decoration:
+                  BoxDecoration(color: Colors.blue, shape: BoxShape.circle),
+            ),
           ),
+          Padding(
+            padding: EdgeInsets.only(top: 9.0, left: 5.0),
+            child: Text(
+              _firstName,
+              style: TextStyle(
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.9),
+            ),
+          )
         ],
       ),
     );

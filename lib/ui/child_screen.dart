@@ -34,10 +34,12 @@ class _ChildScreenState extends State<ChildScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black54,
       body: Column(
         children: <Widget>[
           Flexible(
             child: ListView.builder(
+              padding: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
               itemCount: _childList.length,
               itemBuilder: (_, int index) {
                 return Card(
@@ -49,13 +51,13 @@ class _ChildScreenState extends State<ChildScreen> {
             ),
           ),
           Divider(
-            height: 1.0,
+            height: 20.0,
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Add Child',
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.blue,
         child: ListTile(
           title: Icon(Icons.add),
         ),
@@ -73,8 +75,8 @@ class _ChildScreenState extends State<ChildScreen> {
               controller: _textEditingController,
               autofocus: true,
               decoration: InputDecoration(
-                  labelText: "Child",
-                  hintText: "eg. Add your child",
+                  labelText: "First Name",
+                  hintText: "eg. Logan, Sara, ...",
                   icon: Icon(Icons.note_add)),
             ),
           )
