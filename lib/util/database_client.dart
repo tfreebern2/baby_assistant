@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:async';
 
 import 'package:baby_assistant/model/child.dart';
+import 'package:baby_assistant/model/drink_activity.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -112,5 +113,11 @@ class DatabaseHelper {
   Future close() async {
     var dbClient = await db;
     return dbClient.close();
+  }
+
+  Future<int> saveDrinkActivity(DrinkActivity drinkActivity) async {
+    var dbClient = await db;
+    var result = await dbClient.insert("$tableDrinkActivity", drinkActivity.toMap());
+    return result;
   }
 }

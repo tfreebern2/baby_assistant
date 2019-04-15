@@ -17,6 +17,9 @@ class BabyAssistant extends StatelessWidget {
     return MaterialApp(
       title: 'Baby Assistant',
       home: Home(),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       debugShowCheckedModeBanner: false,
     );
   }

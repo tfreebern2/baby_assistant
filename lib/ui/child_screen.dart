@@ -34,7 +34,7 @@ class _ChildScreenState extends State<ChildScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black54,
+      backgroundColor: Colors.blueGrey,
       body: Column(
         children: <Widget>[
           Flexible(
@@ -65,7 +65,6 @@ class _ChildScreenState extends State<ChildScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Add Child',
-        backgroundColor: Colors.blue,
         child: ListTile(
           title: Icon(Icons.add),
         ),

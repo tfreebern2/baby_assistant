@@ -4,6 +4,7 @@ class DrinkActivity {
     this._amount, this._unit);
 
   int _id;
+  int _routineId;
   String _date;
   String _startTime;
   String _endTime;
@@ -19,6 +20,7 @@ class DrinkActivity {
     this._amount = obj["amount"];
     this._unit = obj["unit"];
 
+    this._routineId = obj["routineId"];
     this._id = obj["id"];
   }
 
@@ -37,6 +39,7 @@ class DrinkActivity {
     map["description"] = _description;
     map["amount"] = _amount;
     map["unit"] = _unit;
+    map["routineId"] = _routineId;
 
     if (_id != null) {
       map["id"] = _id;
@@ -52,6 +55,7 @@ class DrinkActivity {
     this._description = map["description"];
     this._amount = map["amount"];
     this._unit = map["unit"];
+    this._routineId = map["routineId"];
     this._id = map["id"];
   }
 
