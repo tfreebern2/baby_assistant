@@ -1,7 +1,9 @@
-class DrinkActivity {
+import 'package:flutter/material.dart';
+
+class DrinkActivity extends StatelessWidget{
 
   DrinkActivity(this._date, this._startTime, this._endTime, this._description,
-    this._amount, this._unit);
+    this._amount);
 
   int _id;
   int _routineId;
@@ -10,7 +12,7 @@ class DrinkActivity {
   String _endTime;
   String _description;
   String _amount;
-  Unit _unit;
+//  Unit _unit;
 
   DrinkActivity.map(dynamic obj) {
     this._date = obj["date"];
@@ -18,7 +20,7 @@ class DrinkActivity {
     this._endTime = obj["end_time"];
     this._description = obj["description"];
     this._amount = obj["amount"];
-    this._unit = obj["unit"];
+//    this._unit = obj["unit"];
 
     this._routineId = obj["routineId"];
     this._id = obj["id"];
@@ -29,7 +31,7 @@ class DrinkActivity {
   String get endTime => _endTime;
   String get description => _description;
   String get amount => _amount;
-  Unit get unit => _unit;
+//  Unit get unit => _unit;
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
@@ -38,7 +40,7 @@ class DrinkActivity {
     map["end_time"] =_endTime;
     map["description"] = _description;
     map["amount"] = _amount;
-    map["unit"] = _unit;
+//    map["unit"] = _unit;
     map["routineId"] = _routineId;
 
     if (_id != null) {
@@ -54,13 +56,28 @@ class DrinkActivity {
     this._endTime = map["end_time"];
     this._description = map["description"];
     this._amount = map["amount"];
-    this._unit = map["unit"];
+//    this._unit = map["unit"];
     this._routineId = map["routineId"];
     this._id = map["id"];
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Text(_date.toString()),
+          Text(_startTime.toString()),
+          Text(_endTime.toString()),
+          Text(_description),
+          Text(_amount),
+//          Text(_unit.toString())
+        ],
+      ),
+    );
+  }
 }
 
-enum Unit { ounce }
+//enum Unit { ounce }
 
-const Map<Unit, String> unitsOfMeasurement = {Unit.ounce: 'ounce(s)'};
+//const Map<Unit, String> unitsOfMeasurement = {Unit.ounce: 'ounce(s)'};

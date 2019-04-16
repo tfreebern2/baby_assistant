@@ -70,6 +70,7 @@ class DatabaseHelper {
         "$columnUnit TEXT)");
   }
 
+  // Child
   Future<int> saveChild(Child child) async {
     var dbClient = await db;
     int result = await dbClient.insert("$tableChild", child.toMap());
@@ -110,14 +111,31 @@ class DatabaseHelper {
         where: "$columnId =?", whereArgs: [item.id]);
   }
 
-  Future close() async {
-    var dbClient = await db;
-    return dbClient.close();
-  }
-
+  // Drink Activity
   Future<int> saveDrinkActivity(DrinkActivity drinkActivity) async {
     var dbClient = await db;
     var result = await dbClient.insert("$tableDrinkActivity", drinkActivity.toMap());
     return result;
+  }
+
+  Future<DrinkActivity> getDrinkActivity(int id) async {
+    var dbClient = await db;
+    var result = await dbClient
+        .rawQuery("SELECT * FROM $tableDrinkActivity WHERE $columnId = $id");
+
+    if (result.length == 0) return null;
+    return DrinkActivity.fromMap(result.first);
+  }
+
+  Future<List> getDrinkActivities() async {
+    var dbClient = await db;
+    var result = await dbClient
+        .rawQuery("SELECT * FROM $tableDrinkActivity ORDER BY $columnDate ASC");
+    return result.toList();
+  }
+
+  Future close() async {
+    var dbClient = await db;
+    return dbClient.close();
   }
 }

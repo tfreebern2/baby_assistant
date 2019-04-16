@@ -9,4 +9,13 @@ String dateNowFormatted() {
   return formatted;
 }
 
+String dateNowFormattedForDb() {
+  var now = DateTime.now();
+  var formatter = new DateFormat.yMd();
+
+  String formatted = formatter.format(now);
+
+  return formatted;
+}
+
 String string = new DateFormat() as String;
