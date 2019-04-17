@@ -122,8 +122,8 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
           onPressed: () {
             _handleSubmitted(
                 dateNowFormattedForDb(),
-                new DateFormat.jm().toString(),
-                new DateFormat.jm().toString(),
+                dateNowHourMinute(),
+                dateNowHourMinute(),
                 _descriptionController.text,
                 _amountController.text);
             _descriptionController.clear();

@@ -22,7 +22,7 @@ class DrinkActivity extends StatelessWidget{
     this._amount = obj["amount"];
 //    this._unit = obj["unit"];
 
-    this._routineId = obj["routineId"];
+//    this._routineId = obj["routineId"];
     this._id = obj["id"];
   }
 
@@ -41,7 +41,6 @@ class DrinkActivity extends StatelessWidget{
     map["description"] = _description;
     map["amount"] = _amount;
 //    map["unit"] = _unit;
-    map["routineId"] = _routineId;
 
     if (_id != null) {
       map["id"] = _id;
@@ -57,7 +56,6 @@ class DrinkActivity extends StatelessWidget{
     this._description = map["description"];
     this._amount = map["amount"];
 //    this._unit = map["unit"];
-    this._routineId = map["routineId"];
     this._id = map["id"];
   }
 
@@ -66,6 +64,7 @@ class DrinkActivity extends StatelessWidget{
     return Container(
       child: Column(
         children: <Widget>[
+          Text('Infant - Drank'),
           Text(_date.toString()),
           Text(_startTime.toString()),
           Text(_endTime.toString()),
