@@ -3,7 +3,6 @@ import 'package:baby_assistant/model/drink_activity.dart';
 import 'package:baby_assistant/util/database_client.dart';
 import 'package:flutter/material.dart';
 import 'package:baby_assistant/util/date_helper.dart';
-import 'package:intl/intl.dart';
 
 class ChildDetailScreen extends StatefulWidget {
   final Child child;
@@ -27,15 +26,15 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
   }
 
   void _handleSubmitted(String date, String startTime, String endTime,
-      String description, String amount) async {
+      String description, String amount, int childId) async {
     _descriptionController.clear();
     _amountController.clear();
     DrinkActivity drinkActivity =
-        new DrinkActivity(date, startTime, endTime, description, amount);
+        new DrinkActivity(date, startTime, endTime, description, amount, childId);
     int savedDrinkActivityId = await db.saveDrinkActivity(drinkActivity);
 
     DrinkActivity addedDrinkActivity =
-        await db.getDrinkActivity(savedDrinkActivityId);
+        await db.getDrinkActivity(savedDrinkActivityId, widget.child.id);
 
     setState(() {
       _drinkList.insert(0, addedDrinkActivity);
@@ -125,7 +124,9 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                 dateNowHourMinute(),
                 dateNowHourMinute(),
                 _descriptionController.text,
-                _amountController.text);
+                _amountController.text,
+                widget.child.id
+            );
             _descriptionController.clear();
             _amountController.clear();
             // removes dialog box
@@ -149,7 +150,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
   }
 
   _readDrinkList() async {
-    List drinkActivityList = await db.getDrinkActivities();
+    List drinkActivityList = await db.getDrinkActivities(widget.child.id);
     drinkActivityList.forEach((item) {
       setState(() {
         _drinkList.add(DrinkActivity.map(item));

@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 class DrinkActivity extends StatelessWidget{
 
   DrinkActivity(this._date, this._startTime, this._endTime, this._description,
-    this._amount);
+    this._amount, this._childId);
 
   int _id;
+  int _childId;
   int _routineId;
   String _date;
   String _startTime;
@@ -23,6 +24,7 @@ class DrinkActivity extends StatelessWidget{
 //    this._unit = obj["unit"];
 
 //    this._routineId = obj["routineId"];
+    this._childId = obj["childId"];
     this._id = obj["id"];
   }
 
@@ -31,6 +33,7 @@ class DrinkActivity extends StatelessWidget{
   String get endTime => _endTime;
   String get description => _description;
   String get amount => _amount;
+  int get childId => _childId;
 //  Unit get unit => _unit;
 
   Map<String, dynamic> toMap() {
@@ -41,6 +44,7 @@ class DrinkActivity extends StatelessWidget{
     map["description"] = _description;
     map["amount"] = _amount;
 //    map["unit"] = _unit;
+    map["childId"] = _childId;
 
     if (_id != null) {
       map["id"] = _id;
@@ -56,6 +60,8 @@ class DrinkActivity extends StatelessWidget{
     this._description = map["description"];
     this._amount = map["amount"];
 //    this._unit = map["unit"];
+    this._childId = map["childId"];
+
     this._id = map["id"];
   }
 

@@ -16,7 +16,7 @@ class DatabaseHelper {
   final String columnId = "id";
   final String columnFirstName = "first_name";
   final String columnBirthdate = "birthdate";
-  final String columnChildId = "child_id";
+  final String columnChildId = "childId";
 
   final String tableRoutine = "routineTable";
   final String columnDate = "date";
@@ -51,7 +51,7 @@ class DatabaseHelper {
   initDB() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentDirectory.path,
-        "baby4.db"); //home://directory/files/notodo_db.db
+        "baby5e.db"); //home://directory/files/notodo_db.db
 
     var ourDB = await openDatabase(path, version: 1, onCreate: _onCreate);
     return ourDB;
@@ -65,7 +65,7 @@ class DatabaseHelper {
 //        "$columnAteActivityId INTEGER, $columnDrinkActivityId INTEGER, "
 //        "$columnNapActivityId INTEGER, $columnChangeActivityId INTEGER)");
     await db.execute(
-        "CREATE TABLE $tableDrinkActivity(id INTEGER PRIMARY KEY, $columnDate TEXT, "
+        "CREATE TABLE $tableDrinkActivity(id INTEGER PRIMARY KEY, $columnChildId REFERENCES child (id), $columnDate TEXT, "
         "$columnStartTime TEXT, $columnEndTime TEXT, $columnDescription TEXT, $columnAmount TEXT, "
         "$columnUnit TEXT)");
   }
@@ -114,23 +114,24 @@ class DatabaseHelper {
   // Drink Activity
   Future<int> saveDrinkActivity(DrinkActivity drinkActivity) async {
     var dbClient = await db;
-    var result = await dbClient.insert("$tableDrinkActivity", drinkActivity.toMap());
+    var result =
+        await dbClient.insert("$tableDrinkActivity", drinkActivity.toMap());
     return result;
   }
 
-  Future<DrinkActivity> getDrinkActivity(int id) async {
+  Future<DrinkActivity> getDrinkActivity(int id, int childId) async {
     var dbClient = await db;
     var result = await dbClient
-        .rawQuery("SELECT * FROM $tableDrinkActivity WHERE $columnId = $id");
+        .rawQuery("SELECT * FROM $tableDrinkActivity WHERE $columnId = $id AND $columnChildId = $childId");
 
     if (result.length == 0) return null;
     return DrinkActivity.fromMap(result.first);
   }
 
-  Future<List> getDrinkActivities() async {
+  Future<List> getDrinkActivities(int childId) async {
     var dbClient = await db;
     var result = await dbClient
-        .rawQuery("SELECT * FROM $tableDrinkActivity ORDER BY $columnDate ASC");
+        .rawQuery("SELECT * FROM $tableDrinkActivity WHERE $columnChildId = $childId ORDER BY $columnDate ASC");
     return result.toList();
   }
 
