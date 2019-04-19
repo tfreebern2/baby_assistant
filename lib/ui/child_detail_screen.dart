@@ -29,8 +29,8 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
       String description, String amount, int childId) async {
     _descriptionController.clear();
     _amountController.clear();
-    DrinkActivity drinkActivity =
-        new DrinkActivity(date, startTime, endTime, description, amount, childId);
+    DrinkActivity drinkActivity = new DrinkActivity(
+        date, startTime, endTime, description, amount, childId);
     int savedDrinkActivityId = await db.saveDrinkActivity(drinkActivity);
 
     DrinkActivity addedDrinkActivity =
@@ -46,7 +46,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
     return Scaffold(
       backgroundColor: Colors.blueGrey,
       appBar: AppBar(
-        title: Text('Baby Assistant'),
+        title: Text('Baby Assistant')
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -81,13 +81,97 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Add Drink Activity',
-        child: ListTile(
-          title: Icon(Icons.add),
+      floatingActionButton: _buildFabs()
+    );
+  }
+
+  Widget _buildFabs() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            height: 45.0,
+            width: 45.0,
+            child: FittedBox(
+              child: FloatingActionButton(
+                heroTag: null,
+                backgroundColor: Colors.grey,
+                tooltip: 'Log Nap Activity',
+                child: ListTile(
+                  title: Icon(Icons.local_hotel),
+                ),
+                onPressed: () => debugPrint("Nap"),
+              ),
+            ),
+          ),
         ),
-        onPressed: _showFormDialog,
-      ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            height: 45.0,
+            width: 45.0,
+            child: FittedBox(
+              child: FloatingActionButton(
+                heroTag: null,
+                backgroundColor: Colors.grey,
+                tooltip: 'Log Changing Activity',
+                child: ListTile(
+                  title: Icon(Icons.child_care),
+                ),
+                onPressed: () => debugPrint("Change"),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            height: 45.0,
+            width: 45.0,
+            child: FittedBox(
+              child: FloatingActionButton(
+                heroTag: null,
+                backgroundColor: Colors.grey,
+                tooltip: 'Log Eat Activity',
+                child: ListTile(
+                  title: Icon(Icons.restaurant),
+                ),
+                onPressed: () => debugPrint("Eat"),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            height: 45.0,
+            width: 45.0,
+            child: FittedBox(
+              child: FloatingActionButton(
+                heroTag: null,
+                backgroundColor: Colors.grey,
+                tooltip: 'Log Drink Activity',
+                child: ListTile(
+                  title: Icon(Icons.local_drink),
+                ),
+                onPressed: () => debugPrint("Drink"),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: FloatingActionButton(
+            tooltip: 'Add Activity',
+            child: ListTile(
+              title: Icon(Icons.menu),
+            ),
+            onPressed: _showFormDialog,
+          ),
+        ),
+      ],
     );
   }
 
@@ -125,8 +209,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                 dateNowHourMinute(),
                 _descriptionController.text,
                 _amountController.text,
-                widget.child.id
-            );
+                widget.child.id);
             _descriptionController.clear();
             _amountController.clear();
             // removes dialog box
