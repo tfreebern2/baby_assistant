@@ -18,6 +18,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
   final List<DrinkActivity> _drinkList = <DrinkActivity>[];
   final _descriptionController = new TextEditingController();
   final _amountController = new TextEditingController();
+  double _opacity = 0.0;
 
   @override
   void initState() {
@@ -44,45 +45,42 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
-      appBar: AppBar(
-        title: Text('Baby Assistant')
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 50.0),
-              child: Text(
-                widget.child.firstName,
-                style: TextStyle(fontSize: 22.0, color: Colors.white),
+        backgroundColor: Colors.blueGrey,
+        appBar: AppBar(title: Text('Baby Assistant')),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 50.0),
+                child: Text(
+                  widget.child.firstName,
+                  style: TextStyle(fontSize: 22.0, color: Colors.white),
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              '${dateNowFormatted()}',
-              style: TextStyle(color: Colors.white),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                '${dateNowFormatted()}',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-                padding: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
-                itemCount: _drinkList.length,
-                itemBuilder: (_, int index) {
-                  return Card(
-                    child: ListTile(
-                      title: _drinkList[index],
-                    ),
-                  );
-                }),
-          ),
-        ],
-      ),
-      floatingActionButton: _buildFabs()
-    );
+            Expanded(
+              child: ListView.builder(
+                  padding: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
+                  itemCount: _drinkList.length,
+                  itemBuilder: (_, int index) {
+                    return Card(
+                      child: ListTile(
+                        title: _drinkList[index],
+                      ),
+                    );
+                  }),
+            ),
+          ],
+        ),
+        floatingActionButton: _buildFabs());
   }
 
   Widget _buildFabs() {
@@ -91,72 +89,88 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(
-            height: 45.0,
-            width: 45.0,
-            child: FittedBox(
-              child: FloatingActionButton(
-                heroTag: null,
-                backgroundColor: Colors.grey,
-                tooltip: 'Log Nap Activity',
-                child: ListTile(
-                  title: Icon(Icons.local_hotel),
+          child: AnimatedOpacity(
+            duration: Duration(milliseconds: 250),
+            opacity: _opacity,
+            child: Container(
+              height: 45.0,
+              width: 45.0,
+              child: FittedBox(
+                child: FloatingActionButton(
+                  heroTag: null,
+                  backgroundColor: Colors.grey,
+                  tooltip: 'Log Nap Activity',
+                  child: ListTile(
+                    title: Icon(Icons.local_hotel),
+                  ),
+                  onPressed: () => debugPrint("Nap"),
                 ),
-                onPressed: () => debugPrint("Nap"),
               ),
             ),
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(
-            height: 45.0,
-            width: 45.0,
-            child: FittedBox(
-              child: FloatingActionButton(
-                heroTag: null,
-                backgroundColor: Colors.grey,
-                tooltip: 'Log Changing Activity',
-                child: ListTile(
-                  title: Icon(Icons.child_care),
+          child: AnimatedOpacity(
+            duration: Duration(milliseconds: 250),
+            opacity: _opacity,
+            child: Container(
+              height: 45.0,
+              width: 45.0,
+              child: FittedBox(
+                child: FloatingActionButton(
+                  heroTag: null,
+                  backgroundColor: Colors.grey,
+                  tooltip: 'Log Changing Activity',
+                  child: ListTile(
+                    title: Icon(Icons.child_care),
+                  ),
+                  onPressed: () => debugPrint("Change"),
                 ),
-                onPressed: () => debugPrint("Change"),
               ),
             ),
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(
-            height: 45.0,
-            width: 45.0,
-            child: FittedBox(
-              child: FloatingActionButton(
-                heroTag: null,
-                backgroundColor: Colors.grey,
-                tooltip: 'Log Eat Activity',
-                child: ListTile(
-                  title: Icon(Icons.restaurant),
+          child: AnimatedOpacity(
+            duration: Duration(milliseconds: 250),
+            opacity: _opacity,
+            child: Container(
+              height: 45.0,
+              width: 45.0,
+              child: FittedBox(
+                child: FloatingActionButton(
+                  heroTag: null,
+                  backgroundColor: Colors.grey,
+                  tooltip: 'Log Eat Activity',
+                  child: ListTile(
+                    title: Icon(Icons.restaurant),
+                  ),
+                  onPressed: () => debugPrint("Eat"),
                 ),
-                onPressed: () => debugPrint("Eat"),
               ),
             ),
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(
-            height: 45.0,
-            width: 45.0,
-            child: FittedBox(
-              child: FloatingActionButton(
-                heroTag: null,
-                backgroundColor: Colors.grey,
-                tooltip: 'Log Drink Activity',
-                child: ListTile(
-                  title: Icon(Icons.local_drink),
+          child: AnimatedOpacity(
+            duration: Duration(milliseconds: 250),
+            opacity: _opacity,
+            child: Container(
+              height: 45.0,
+              width: 45.0,
+              child: FittedBox(
+                child: FloatingActionButton(
+                  heroTag: null,
+                  backgroundColor: Colors.grey,
+                  tooltip: 'Log Drink Activity',
+                  child: ListTile(
+                    title: Icon(Icons.local_drink),
+                  ),
+                  onPressed: () => debugPrint("Drink"),
                 ),
-                onPressed: () => debugPrint("Drink"),
               ),
             ),
           ),
@@ -164,12 +178,19 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: FloatingActionButton(
-            tooltip: 'Add Activity',
-            child: ListTile(
-              title: Icon(Icons.menu),
-            ),
-            onPressed: _showFormDialog,
-          ),
+              tooltip: 'Add Activity',
+              child: ListTile(
+                title: Icon(Icons.menu),
+              ),
+              onPressed: () {
+                setState(() {
+                  if (_opacity == 0.0) {
+                    _opacity = 1.0;
+                  } else {
+                    _opacity = 0.0;
+                  }
+                });
+              }),
         ),
       ],
     );
