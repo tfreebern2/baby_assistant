@@ -26,7 +26,6 @@ class _LogDrinkState extends State<LogDrink> {
   // Controllers
   final _startTimeController = new TextEditingController();
   final _endTimeController = new TextEditingController();
-  final _descriptionController = new TextEditingController();
   final _amountController = new TextEditingController();
 
   @override
@@ -67,21 +66,10 @@ class _LogDrinkState extends State<LogDrink> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                top: 10.0, right: 20.0, left: 20.0, bottom: 10.0),
-            child: TextFormField(
-              controller: _descriptionController,
-              maxLines: 3,
-              decoration: InputDecoration(
-                  labelText: 'Description',
-                  hintText: 'Enter a small description',
-                  hintMaxLines: 3),
-            ),
-          ),
-          Padding(
             padding: const EdgeInsets.all(20.0),
             child: TextFormField(
               controller: _amountController,
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                   labelText: 'Amount',
                   hintText: 'Enter the amount your child drank'),
@@ -97,7 +85,6 @@ class _LogDrinkState extends State<LogDrink> {
                       DateTime.now().toIso8601String(),
                       _startTimeController.text,
                       _endTimeController.text,
-                      _descriptionController.text,
                       _amountController.text,
                       widget.childId);
                 }),
@@ -108,14 +95,13 @@ class _LogDrinkState extends State<LogDrink> {
   }
 
   void _drinkSubmitted(String date, String startTime, String endTime,
-      String description, String amount, int childId) async {
+      String amount, int childId) async {
     _startTimeController.clear();
     _endTimeController.clear();
-    _descriptionController.clear();
     _amountController.clear();
 
     DrinkActivity drinkActivity = new DrinkActivity(
-        date, startTime, endTime, description, amount, childId);
+        date, startTime, endTime, amount, childId);
 
     await db.saveDrinkActivity(drinkActivity);
     Navigator.push(

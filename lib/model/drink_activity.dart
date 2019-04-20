@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
 class DrinkActivity extends StatelessWidget {
-  DrinkActivity(this._date, this._startTime, this._endTime, this._description,
+  DrinkActivity(this._date, this._startTime, this._endTime,
       this._amount, this._childId);
 
   int _id;
   int _childId;
-  int _routineId;
   String _date;
   String _startTime;
   String _endTime;
@@ -79,7 +78,7 @@ class DrinkActivity extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'Infant - Drank',
+              'Drink Activity',
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             ),
           ),

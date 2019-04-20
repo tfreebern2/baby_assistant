@@ -29,26 +29,14 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.blueGrey,
-        appBar: AppBar(title: Text('Baby Assistant')),
+        appBar: AppBar(
+            title: Text(
+          widget.child.firstName + "\n" + dateNowFormatted(),
+          textAlign: TextAlign.center,
+        )),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 50.0),
-                child: Text(
-                  widget.child.firstName,
-                  style: TextStyle(fontSize: 22.0, color: Colors.white),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                '${dateNowFormatted()}',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
             Expanded(
               child: ListView.builder(
                   padding: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
@@ -187,6 +175,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
       ],
     );
   }
+
   _readDrinkList() async {
     List drinkActivityList = await db.getDrinkActivities(widget.child.id);
     drinkActivityList.forEach((item) {
