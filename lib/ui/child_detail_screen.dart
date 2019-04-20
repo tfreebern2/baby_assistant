@@ -1,5 +1,6 @@
 import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/model/drink_activity.dart';
+import 'package:baby_assistant/ui/home.dart';
 import 'package:baby_assistant/ui/log_drink_screen.dart';
 import 'package:baby_assistant/util/database_client.dart';
 import 'package:flutter/material.dart';
@@ -30,10 +31,16 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
     return Scaffold(
         backgroundColor: Colors.blueGrey,
         appBar: AppBar(
+            leading: IconButton(
+                icon: Icon(Icons.arrow_back_ios),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Home()));
+                }),
             title: Text(
-          widget.child.firstName + "\n" + dateNowFormatted(),
-          textAlign: TextAlign.center,
-        )),
+              widget.child.firstName + "\n" + dateNowFormatted(),
+              textAlign: TextAlign.center,
+            )),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
