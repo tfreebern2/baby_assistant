@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-class DrinkActivity extends StatelessWidget{
-
+class DrinkActivity extends StatelessWidget {
   DrinkActivity(this._date, this._startTime, this._endTime, this._description,
-    this._amount, this._childId);
+      this._amount, this._childId);
 
   int _id;
   int _childId;
@@ -13,6 +12,7 @@ class DrinkActivity extends StatelessWidget{
   String _endTime;
   String _description;
   String _amount;
+
 //  Unit _unit;
 
   DrinkActivity.map(dynamic obj) {
@@ -29,18 +29,24 @@ class DrinkActivity extends StatelessWidget{
   }
 
   String get date => _date;
+
   String get startTime => _startTime;
+
   String get endTime => _endTime;
+
   String get description => _description;
+
   String get amount => _amount;
+
   int get childId => _childId;
+
 //  Unit get unit => _unit;
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
     map["date"] = _date;
     map["start_time"] = _startTime;
-    map["end_time"] =_endTime;
+    map["end_time"] = _endTime;
     map["description"] = _description;
     map["amount"] = _amount;
 //    map["unit"] = _unit;
@@ -70,12 +76,28 @@ class DrinkActivity extends StatelessWidget{
     return Container(
       child: Column(
         children: <Widget>[
-          Text('Infant - Drank'),
-          Text(_date.toString()),
-          Text(_startTime.toString()),
-          Text(_endTime.toString()),
-          Text(_description),
-          Text(_amount),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Infant - Drank',
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text("Start Time: " + _startTime.toString()),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text("End Time: " + _endTime.toString()),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              _amount + " ounce(s)",
+              style: TextStyle(fontStyle: FontStyle.italic),
+            ),
+          ),
 //          Text(_unit.toString())
         ],
       ),

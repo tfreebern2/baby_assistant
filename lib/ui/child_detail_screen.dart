@@ -17,30 +17,12 @@ class ChildDetailScreen extends StatefulWidget {
 class _ChildDetailScreenState extends State<ChildDetailScreen> {
   var db = new DatabaseHelper();
   final List<DrinkActivity> _drinkList = <DrinkActivity>[];
-  final _descriptionController = new TextEditingController();
-  final _amountController = new TextEditingController();
   double _opacity = 0.0;
 
   @override
   void initState() {
     super.initState();
     _readDrinkList();
-  }
-
-  void _handleSubmitted(String date, String startTime, String endTime,
-      String description, String amount, int childId) async {
-    _descriptionController.clear();
-    _amountController.clear();
-    DrinkActivity drinkActivity = new DrinkActivity(
-        date, startTime, endTime, description, amount, childId);
-    int savedDrinkActivityId = await db.saveDrinkActivity(drinkActivity);
-
-    DrinkActivity addedDrinkActivity =
-        await db.getDrinkActivity(savedDrinkActivityId, widget.child.id);
-
-    setState(() {
-      _drinkList.insert(0, addedDrinkActivity);
-    });
   }
 
   @override
@@ -174,7 +156,10 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LogDrink(),
+                          builder: (context) => LogDrink(
+                                child: widget.child,
+                                childId: widget.child.id,
+                              ),
                         ));
                   },
                 ),
@@ -202,64 +187,6 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
       ],
     );
   }
-
-  void _showFormDialog() {
-    var alert = AlertDialog(
-      content: Row(
-        children: <Widget>[
-          Expanded(
-            child: TextField(
-              controller: _descriptionController,
-              decoration: InputDecoration(
-                  labelText: "Add description",
-                  hintText: "eg. Something ...",
-                  icon: Icon(Icons.note_add)),
-            ),
-          ),
-          Expanded(
-            child: TextField(
-              controller: _amountController,
-              decoration: InputDecoration(
-                  labelText: "Add amount",
-                  hintText: "eg. Something ...",
-                  icon: Icon(Icons.note_add)),
-              keyboardType: TextInputType.numberWithOptions(),
-            ),
-          ),
-        ],
-      ),
-      actions: <Widget>[
-        FlatButton(
-          onPressed: () {
-            _handleSubmitted(
-                dateNowFormattedForDb(),
-                dateNowHourMinute(),
-                dateNowHourMinute(),
-                _descriptionController.text,
-                _amountController.text,
-                widget.child.id);
-            _descriptionController.clear();
-            _amountController.clear();
-            // removes dialog box
-            Navigator.pop(context);
-          },
-          child: Text('Save'),
-        ),
-        FlatButton(
-          onPressed: () {
-            return Navigator.pop(context);
-          },
-          child: Text("Cancel"),
-        ),
-      ],
-    );
-    showDialog(
-        context: context,
-        builder: (_) {
-          return alert;
-        });
-  }
-
   _readDrinkList() async {
     List drinkActivityList = await db.getDrinkActivities(widget.child.id);
     drinkActivityList.forEach((item) {

@@ -60,10 +60,6 @@ class DatabaseHelper {
   void _onCreate(Database db, int version) async {
     await db.execute(
         "CREATE TABLE $tableChild(id INTEGER PRIMARY KEY, $columnFirstName TEXT)");
-//    await db.execute(
-//        "CREATE TABLE $tableRoutine(id INTEGER PRIMARY KEY, $columnChildId INTEGER, $columnDate TEXT, "
-//        "$columnAteActivityId INTEGER, $columnDrinkActivityId INTEGER, "
-//        "$columnNapActivityId INTEGER, $columnChangeActivityId INTEGER)");
     await db.execute(
         "CREATE TABLE $tableDrinkActivity(id INTEGER PRIMARY KEY, $columnChildId REFERENCES child (id), $columnDate TEXT, "
         "$columnStartTime TEXT, $columnEndTime TEXT, $columnDescription TEXT, $columnAmount TEXT, "
