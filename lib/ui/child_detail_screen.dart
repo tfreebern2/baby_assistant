@@ -1,5 +1,6 @@
 import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/model/drink_activity.dart';
+import 'package:baby_assistant/ui/log_drink_screen.dart';
 import 'package:baby_assistant/util/database_client.dart';
 import 'package:flutter/material.dart';
 import 'package:baby_assistant/util/date_helper.dart';
@@ -80,10 +81,10 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
             ),
           ],
         ),
-        floatingActionButton: _buildFabs());
+        floatingActionButton: _buildFabList());
   }
 
-  Widget _buildFabs() {
+  Widget _buildFabList() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
@@ -169,7 +170,13 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                   child: ListTile(
                     title: Icon(Icons.local_drink),
                   ),
-                  onPressed: () => debugPrint("Drink"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LogDrink(),
+                        ));
+                  },
                 ),
               ),
             ),
