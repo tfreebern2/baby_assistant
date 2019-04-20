@@ -40,7 +40,9 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
             title: Text(
               widget.child.firstName + "\n" + dateNowFormatted(),
               textAlign: TextAlign.center,
-            )),
+            ),
+            centerTitle: true,
+        ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[

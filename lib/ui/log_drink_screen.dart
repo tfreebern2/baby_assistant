@@ -33,6 +33,7 @@ class _LogDrinkState extends State<LogDrink> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Log Drink Activity'),
+        centerTitle: true,
       ),
       body: ListView(
         children: <Widget>[
