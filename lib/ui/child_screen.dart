@@ -84,7 +84,7 @@ class _ChildScreenState extends State<ChildScreen> {
               decoration: InputDecoration(
                   labelText: "First Name",
                   hintText: "eg. Logan, Sara, ...",
-                  icon: Icon(Icons.note_add)),
+                  icon: Icon(Icons.child_care)),
             ),
           )
         ],

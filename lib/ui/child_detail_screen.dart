@@ -3,8 +3,8 @@ import 'package:baby_assistant/model/drink_activity.dart';
 import 'package:baby_assistant/ui/home.dart';
 import 'package:baby_assistant/ui/log_drink_screen.dart';
 import 'package:baby_assistant/util/database_client.dart';
-import 'package:flutter/material.dart';
 import 'package:baby_assistant/util/date_helper.dart';
+import 'package:flutter/material.dart';
 
 class ChildDetailScreen extends StatefulWidget {
   final Child child;
@@ -31,21 +31,28 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
     return Scaffold(
         backgroundColor: Colors.blueGrey,
         appBar: AppBar(
-            leading: IconButton(
-                icon: Icon(Icons.arrow_back_ios),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Home()));
-                }),
-            title: Text(
-              widget.child.firstName + "\n" + dateNowFormatted(),
-              textAlign: TextAlign.center,
-            ),
-            centerTitle: true,
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Home()));
+              }),
+          title: Text(
+            widget.child.firstName,
+            textAlign: TextAlign.center,
+          ),
+          centerTitle: true,
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0, bottom: 5.0),
+              child: Text(
+                dateNowFormatted(),
+                style: TextStyle(fontSize: 18.0, color: Colors.white),
+              ),
+            ),
             Expanded(
               child: ListView.builder(
                   padding: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
@@ -191,7 +198,8 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
   }
 
   _readDrinkList() async {
-    List drinkActivityList = await db.getCurrentDrinkActivities(widget.child.id);
+    List drinkActivityList =
+        await db.getCurrentDrinkActivities(widget.child.id);
     drinkActivityList.forEach((item) {
       setState(() {
         _drinkList.add(DrinkActivity.map(item));
@@ -211,8 +219,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
       content: Row(
         children: <Widget>[
           Expanded(
-            child: Text('Are you sure you want to delete this activity?')
-          )
+              child: Text('Are you sure you want to delete this activity?'))
         ],
       ),
       actions: <Widget>[
