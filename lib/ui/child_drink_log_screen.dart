@@ -6,16 +6,16 @@ import 'package:baby_assistant/util/database_client.dart';
 import 'package:baby_assistant/util/date_helper.dart';
 import 'package:flutter/material.dart';
 
-class ChildDetailScreen extends StatefulWidget {
+class ChildDrinkLogScreen extends StatefulWidget {
   final Child child;
 
-  const ChildDetailScreen({Key key, this.child}) : super(key: key);
+  const ChildDrinkLogScreen({Key key, this.child}) : super(key: key);
 
   @override
-  _ChildDetailScreenState createState() => _ChildDetailScreenState();
+  _ChildDrinkLogScreenState createState() => _ChildDrinkLogScreenState();
 }
 
-class _ChildDetailScreenState extends State<ChildDetailScreen> {
+class _ChildDrinkLogScreenState extends State<ChildDrinkLogScreen> {
   var db = new DatabaseHelper();
   final List<DrinkActivity> _drinkList = <DrinkActivity>[];
   double _opacity = 0.0;
@@ -51,6 +51,16 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
               child: Text(
                 dateNowFormatted(),
                 style: TextStyle(fontSize: 18.0, color: Colors.white),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
+              child: Text(
+                'Drink Logs',
+                style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.white,
+                    fontStyle: FontStyle.italic),
               ),
             ),
             Expanded(

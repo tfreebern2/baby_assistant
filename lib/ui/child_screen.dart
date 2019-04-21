@@ -1,5 +1,5 @@
 import 'package:baby_assistant/model/child.dart';
-import 'package:baby_assistant/ui/child_detail_screen.dart';
+import 'package:baby_assistant/ui/child_drink_log_screen.dart';
 import 'package:baby_assistant/util/database_client.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +50,7 @@ class _ChildScreenState extends State<ChildScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                ChildDetailScreen(child: _childList[index]),
+                                ChildDrinkLogScreen(child: _childList[index]),
                           ));
                     },
                   ),
