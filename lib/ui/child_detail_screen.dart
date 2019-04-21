@@ -183,13 +183,8 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                 title: Icon(Icons.menu),
               ),
               onPressed: () {
-                // TODO: Refactor this
                 setState(() {
-                  if (_opacity == 0.0) {
-                    _opacity = 1.0;
-                  } else {
-                    _opacity = 0.0;
-                  }
+                  _opacity = _opacity == 0.0 ? 1.0 : 0.0;
                 });
               }),
         ),

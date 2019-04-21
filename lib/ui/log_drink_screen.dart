@@ -22,7 +22,6 @@ class _LogDrinkState extends State<LogDrink> {
   DateTime selectedStartTime;
   DateTime selectedEndTime;
   bool editable = true;
-  DateTime date;
 
   // Controllers
   final _startTimeController = new TextEditingController();
@@ -36,6 +35,7 @@ class _LogDrinkState extends State<LogDrink> {
         title: Text('Log Drink Activity'),
         centerTitle: true,
       ),
+      // TODO: Add form validation
       body: ListView(
         children: <Widget>[
           Padding(
