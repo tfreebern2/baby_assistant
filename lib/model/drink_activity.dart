@@ -22,7 +22,6 @@ class DrinkActivity extends StatelessWidget {
     this._amount = obj["amount"];
 //    this._unit = obj["unit"];
 
-//    this._routineId = obj["routineId"];
     this._childId = obj["childId"];
     this._id = obj["id"];
   }
@@ -38,6 +37,8 @@ class DrinkActivity extends StatelessWidget {
   String get amount => _amount;
 
   int get childId => _childId;
+
+  int get id => _id;
 
 //  Unit get unit => _unit;
 
@@ -78,7 +79,7 @@ class DrinkActivity extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'Drink Activity',
+              'Child - Drank',
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             ),
           ),

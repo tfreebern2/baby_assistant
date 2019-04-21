@@ -2,6 +2,7 @@ import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/model/drink_activity.dart';
 import 'package:baby_assistant/ui/child_detail_screen.dart';
 import 'package:baby_assistant/util/database_client.dart';
+import 'package:baby_assistant/util/date_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
@@ -83,7 +84,7 @@ class _LogDrinkState extends State<LogDrink> {
                 color: Colors.grey,
                 onPressed: () {
                   _drinkSubmitted(
-                      DateTime.now().toIso8601String(),
+                      dateNowFormattedForDb(),
                       _startTimeController.text,
                       _endTimeController.text,
                       _amountController.text,
@@ -105,6 +106,7 @@ class _LogDrinkState extends State<LogDrink> {
         date, startTime, endTime, amount, childId);
 
     await db.saveDrinkActivity(drinkActivity);
+
     Navigator.push(
         context,
         MaterialPageRoute(

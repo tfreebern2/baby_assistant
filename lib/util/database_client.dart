@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/model/drink_activity.dart';
+import 'package:baby_assistant/util/date_helper.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -117,18 +118,25 @@ class DatabaseHelper {
 
   Future<DrinkActivity> getDrinkActivity(int id, int childId) async {
     var dbClient = await db;
-    var result = await dbClient
-        .rawQuery("SELECT * FROM $tableDrinkActivity WHERE $columnId = $id AND $columnChildId = $childId");
+    var result = await dbClient.rawQuery(
+        "SELECT * FROM $tableDrinkActivity WHERE $columnId = $id AND $columnChildId = $childId");
 
     if (result.length == 0) return null;
     return DrinkActivity.fromMap(result.first);
   }
 
-  Future<List> getDrinkActivities(int childId) async {
+  Future<List> getCurrentDrinkActivities(int childId) async {
     var dbClient = await db;
-    var result = await dbClient
-        .rawQuery("SELECT * FROM $tableDrinkActivity WHERE $columnChildId = $childId ORDER BY $columnDate ASC");
+    String currentDate = dateNowFormattedForDb();
+    var result = await dbClient.rawQuery(
+        "SELECT * FROM $tableDrinkActivity WHERE $columnChildId = $childId AND $columnDate = $currentDate");
     return result.toList();
+  }
+
+  Future<int> deleteDrinkActivity(int id) async {
+    var dbClient = await db;
+    return await dbClient
+        .delete(tableDrinkActivity, where: "$columnId = ?", whereArgs: [id]);
   }
 
   Future close() async {

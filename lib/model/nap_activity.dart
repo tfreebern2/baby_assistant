@@ -5,8 +5,7 @@ class NapActivity {
   NapActivity({
     @required this.date,
     @required this.startTime,
-    @required this.endTime,
-    @required this.length
+    @required this.endTime
   });
 
   // date of nap
@@ -17,7 +16,4 @@ class NapActivity {
 
   // end of nap
   final DateTime endTime;
-
-  // length of nap
-  final DateTime length;
 }

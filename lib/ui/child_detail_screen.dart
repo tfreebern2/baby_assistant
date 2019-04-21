@@ -54,6 +54,10 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                     return Card(
                       child: ListTile(
                         title: _drinkList[index],
+                        onTap: () {
+                          int id = _drinkList[index].id;
+                          _deleteDrinkActivity(id);
+                        },
                       ),
                     );
                   }),
@@ -172,6 +176,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                 title: Icon(Icons.menu),
               ),
               onPressed: () {
+                // TODO: Refactor this
                 setState(() {
                   if (_opacity == 0.0) {
                     _opacity = 1.0;
@@ -186,11 +191,18 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
   }
 
   _readDrinkList() async {
-    List drinkActivityList = await db.getDrinkActivities(widget.child.id);
+    List drinkActivityList = await db.getCurrentDrinkActivities(widget.child.id);
     drinkActivityList.forEach((item) {
       setState(() {
         _drinkList.add(DrinkActivity.map(item));
       });
+    });
+  }
+
+  _deleteDrinkActivity(int id) async {
+    await db.deleteDrinkActivity(id);
+    setState(() {
+      _drinkList.removeWhere((item) => item.id == id);
     });
   }
 }
