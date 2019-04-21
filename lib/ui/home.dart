@@ -7,6 +7,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Baby Assistant'),
+        leading: Text(''), // Hiding Back Button -- hacky solution
         centerTitle: true,
       ),
       body: ChildScreen(),

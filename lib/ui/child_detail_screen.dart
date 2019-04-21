@@ -56,7 +56,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                         title: _drinkList[index],
                         onTap: () {
                           int id = _drinkList[index].id;
-                          _deleteDrinkActivity(id);
+                          _showDeleteDrinkDialog(id);
                         },
                       ),
                     );
@@ -204,5 +204,38 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
     setState(() {
       _drinkList.removeWhere((item) => item.id == id);
     });
+  }
+
+  void _showDeleteDrinkDialog(int id) {
+    var alert = AlertDialog(
+      content: Row(
+        children: <Widget>[
+          Expanded(
+            child: Text('Are you sure you want to delete this activity?')
+          )
+        ],
+      ),
+      actions: <Widget>[
+        FlatButton(
+          onPressed: () {
+            _deleteDrinkActivity(id);
+            // removes dialog box
+            Navigator.pop(context);
+          },
+          child: Text('Delete'),
+        ),
+        FlatButton(
+          onPressed: () {
+            return Navigator.pop(context);
+          },
+          child: Text("Cancel"),
+        ),
+      ],
+    );
+    showDialog(
+        context: context,
+        builder: (_) {
+          return alert;
+        });
   }
 }

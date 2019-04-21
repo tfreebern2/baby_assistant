@@ -112,6 +112,8 @@ class _LogDrinkState extends State<LogDrink> {
         MaterialPageRoute(
             builder: (context) => ChildDetailScreen(
                   child: widget.child,
-                )));
+                )
+        )
+    );
   }
 }
