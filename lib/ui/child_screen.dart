@@ -68,12 +68,36 @@ class _ChildScreenState extends State<ChildScreen> {
         child: ListTile(
           title: Icon(Icons.add),
         ),
-        onPressed: _showFormDialog,
+        onPressed: _showChildForm,
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+          items: <BottomNavigationBarItem>[
+//        BottomNavigationBarItem(
+//            icon: Icon(Icons.home, color: Colors.blueGrey),
+//            title: Text(
+//              'Home',
+//              style: TextStyle(color: Colors.blueGrey),
+//            )),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.local_drink, color: Colors.blueGrey),
+            title: Text('Drink Log', style: TextStyle(color: Colors.blueGrey))),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.restaurant, color: Colors.blueGrey),
+            title: Text('Food Log', style: TextStyle(color: Colors.blueGrey))),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.child_care, color: Colors.blueGrey),
+            title:
+                Text('Change Log', style: TextStyle(color: Colors.blueGrey))),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.local_hotel, color: Colors.blueGrey),
+            title: Text('Nap Log', style: TextStyle(color: Colors.blueGrey))),
+      ]),
     );
   }
 
-  void _showFormDialog() {
+  void _showChildForm() {
     var alert = AlertDialog(
       content: Row(
         children: <Widget>[

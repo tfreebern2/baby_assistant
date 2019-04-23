@@ -47,13 +47,6 @@ class _ChildDrinkLogScreenState extends State<ChildDrinkLogScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(top: 20.0, bottom: 5.0),
-              child: Text(
-                dateNowFormatted(),
-                style: TextStyle(fontSize: 18.0, color: Colors.white),
-              ),
-            ),
-            Padding(
               padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
               child: Text(
                 'Drink Logs',
@@ -61,6 +54,13 @@ class _ChildDrinkLogScreenState extends State<ChildDrinkLogScreen> {
                     fontSize: 18.0,
                     color: Colors.white,
                     fontStyle: FontStyle.italic),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0, bottom: 5.0),
+              child: Text(
+                dateNowFormatted(),
+                style: TextStyle(fontSize: 18.0, color: Colors.white),
               ),
             ),
             Expanded(
