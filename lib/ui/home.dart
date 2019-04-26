@@ -1,4 +1,4 @@
-import 'package:baby_assistant/ui/child_screen.dart';
+import 'package:baby_assistant/ui/child_list_screen.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -10,7 +10,7 @@ class Home extends StatelessWidget {
         leading: Text(''), // Hiding Back Button -- hacky solution
         centerTitle: true,
       ),
-      body: ChildScreen(),
+      body: ChildListScreen(),
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'package:baby_assistant/model/child.dart';
+import 'package:baby_assistant/ui/child_drink_log_screen.dart';
 import 'package:flutter/material.dart';
 
 class DrinkActivity extends StatelessWidget {
@@ -11,6 +13,7 @@ class DrinkActivity extends StatelessWidget {
   String _endTime;
   String _description;
   String _amount;
+  Child child;
 
 //  Unit _unit;
 
@@ -97,8 +100,7 @@ class DrinkActivity extends StatelessWidget {
               _amount + " ounce(s)",
               style: TextStyle(fontStyle: FontStyle.italic),
             ),
-          ),
-//          Text(_unit.toString())
+          )
         ],
       ),
     );

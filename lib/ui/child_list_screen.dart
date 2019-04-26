@@ -1,14 +1,14 @@
 import 'package:baby_assistant/model/child.dart';
-import 'package:baby_assistant/ui/child_drink_log_screen.dart';
+import 'package:baby_assistant/ui/child_detail_screen.dart';
 import 'package:baby_assistant/util/database_client.dart';
 import 'package:flutter/material.dart';
 
-class ChildScreen extends StatefulWidget {
+class ChildListScreen extends StatefulWidget {
   @override
-  _ChildScreenState createState() => _ChildScreenState();
+  _ChildListScreenState createState() => _ChildListScreenState();
 }
 
-class _ChildScreenState extends State<ChildScreen> {
+class _ChildListScreenState extends State<ChildListScreen> {
   var db = new DatabaseHelper();
   final List<Child> _childList = <Child>[];
   final _textEditingController = new TextEditingController();
@@ -50,7 +50,7 @@ class _ChildScreenState extends State<ChildScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                ChildDrinkLogScreen(child: _childList[index]),
+                                ChildDetailScreen(child: _childList[index]),
                           ));
                     },
                   ),
@@ -70,30 +70,6 @@ class _ChildScreenState extends State<ChildScreen> {
         ),
         onPressed: _showChildForm,
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-          items: <BottomNavigationBarItem>[
-//        BottomNavigationBarItem(
-//            icon: Icon(Icons.home, color: Colors.blueGrey),
-//            title: Text(
-//              'Home',
-//              style: TextStyle(color: Colors.blueGrey),
-//            )),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.local_drink, color: Colors.blueGrey),
-            title: Text('Drink Log', style: TextStyle(color: Colors.blueGrey))),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.restaurant, color: Colors.blueGrey),
-            title: Text('Food Log', style: TextStyle(color: Colors.blueGrey))),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.child_care, color: Colors.blueGrey),
-            title:
-                Text('Change Log', style: TextStyle(color: Colors.blueGrey))),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.local_hotel, color: Colors.blueGrey),
-            title: Text('Nap Log', style: TextStyle(color: Colors.blueGrey))),
-      ]),
     );
   }
 

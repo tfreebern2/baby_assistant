@@ -1,6 +1,6 @@
 import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/model/drink_activity.dart';
-import 'package:baby_assistant/ui/child_drink_log_screen.dart';
+import 'package:baby_assistant/ui/child_detail_screen.dart';
 import 'package:baby_assistant/util/database_client.dart';
 import 'package:baby_assistant/util/date_helper.dart';
 import 'package:flutter/material.dart';
@@ -110,7 +110,7 @@ class _LogDrinkState extends State<LogDrink> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => ChildDrinkLogScreen(
+            builder: (context) => ChildDetailScreen(
                   child: widget.child,
                 )
         )
