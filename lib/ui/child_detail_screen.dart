@@ -18,14 +18,14 @@ class ChildDetailScreen extends StatefulWidget {
 
 class _ChildDetailScreenState extends State<ChildDetailScreen> {
   var db = new DatabaseHelper();
-  final List<DrinkActivity> _drinkList = <DrinkActivity>[];
+  List<DrinkActivity> _drinkList = <DrinkActivity>[];
   double _opacity = 0.0;
 
-  @override
-  void initState() {
-    super.initState();
-    _readDrinkList();
-  }
+
+//  @override
+//  void initState() {
+//    super.initState();
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,11 +59,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: <Widget>[
-                  Card(
-                    child: ListTile(
-                      title: _drinkList.last,
-                    ),
-                  ),
+                  _buildLastDrinkActivity(_drinkList)
                 ],
               ),
             ),
@@ -208,7 +204,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
     );
   }
 
-  _readDrinkList() async {
+  Future<List<Map<String, dynamic>>> _readDrinkList() async {
     List drinkActivityList =
         await db.getCurrentDrinkActivities(widget.child.id);
     drinkActivityList.forEach((item) {
@@ -216,5 +212,26 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
         _drinkList.add(DrinkActivity.map(item));
       });
     });
+    return drinkActivityList;
+  }
+
+  Widget _buildLastDrinkActivity(List<DrinkActivity> drinkList) {
+    return FutureBuilder(
+        future: _readDrinkList(),
+        builder: (BuildContext context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+          if (snapshot.data == null || snapshot.data.length == 0) {
+            return Card(
+              child: ListTile(
+                title: Text('No recent Drink Activity'),
+              ),
+            );
+          } else {
+            return Card(
+              child: ListTile(
+                title: drinkList.last,
+              ),
+            );
+          }
+        });
   }
 }
