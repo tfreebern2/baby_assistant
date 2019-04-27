@@ -1,3 +1,4 @@
+import 'package:baby_assistant/model/ate_activity.dart';
 import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/model/drink_activity.dart';
 import 'package:baby_assistant/ui/home.dart';
@@ -20,6 +21,7 @@ class ChildDetailScreen extends StatefulWidget {
 class _ChildDetailScreenState extends State<ChildDetailScreen> {
   var db = new DatabaseHelper();
   List<DrinkActivity> _drinkList = <DrinkActivity>[];
+  List<AteActivity> _ateList = <AteActivity>[];
   double _opacity = 0.0;
 
   @override
@@ -59,27 +61,30 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
-                children: <Widget>[_buildLastDrinkActivity(_drinkList)],
+                children: <Widget>[
+                  _buildLastDrinkActivity(_drinkList),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: RaisedButton(
+                        child: Text('View Drink Log'),
+                        color: Colors.blue,
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChildDrinkList(
+                                      child: widget.child,
+                                    ),
+                              ));
+                        },
+                      ),
+                    ),
+                  ),
+                  _buildLastAteActivity(_ateList)
+                ],
               ),
             ),
-              Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(
-                child: RaisedButton(
-                  child: Text('View Drink Log'),
-                  color: Colors.blue,
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ChildDrinkList(
-                                child: widget.child,
-                              ),
-                        ));
-                  },
-                ),
-              ),
-            )
           ],
         ),
         floatingActionButton: _buildFabList());
@@ -154,9 +159,9 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => LogAte(
-                            child: widget.child,
-                            childId: widget.child.id,
-                          ),
+                                child: widget.child,
+                                childId: widget.child.id,
+                              ),
                         ));
                   },
                 ),
@@ -246,6 +251,45 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
             return Card(
               child: ListTile(
                 title: drinkList.last,
+              ),
+            );
+          }
+        });
+  }
+
+  Future<List<Map<String, dynamic>>> _readAteList() async {
+    List ateActivityList = await db.getCurrentAteActivities(widget.child.id);
+    ateActivityList.forEach((item) {
+      setState(() {
+        _ateList.add(AteActivity.map(item));
+      });
+    });
+    return ateActivityList;
+  }
+
+  Widget _buildLastAteActivity(List<AteActivity> ateList) {
+    return FutureBuilder(
+        future: _readAteList(),
+        builder: (BuildContext context,
+            AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+          if (snapshot.data == null || snapshot.data.length == 0) {
+            return Card(
+              child: Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: ListTile(
+                  title: Center(
+                      child: Text(
+                    'No recent Drink Activity',
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                  )),
+                ),
+              ),
+            );
+          } else {
+            return Card(
+              child: ListTile(
+                title: Text(ateList.last.description),
               ),
             );
           }
