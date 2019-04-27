@@ -30,6 +30,7 @@ class _ChildDrinkLogScreenState extends State<ChildDrinkLogScreen> {
       backgroundColor: Colors.blueGrey,
       appBar: AppBar(
         title: Text(widget.child.firstName),
+        centerTitle: true,
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {

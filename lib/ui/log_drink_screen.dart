@@ -1,6 +1,7 @@
 import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/model/drink_activity.dart';
 import 'package:baby_assistant/ui/child_detail_screen.dart';
+import 'package:baby_assistant/ui/child_drink_log_screen.dart';
 import 'package:baby_assistant/util/database_client.dart';
 import 'package:baby_assistant/util/date_helper.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,16 @@ class _LogDrinkState extends State<LogDrink> {
       appBar: AppBar(
         title: Text('Log Drink Activity'),
         centerTitle: true,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ChildDetailScreen(
+                        child: widget.child,
+                      )));
+            }),
       ),
       // TODO: Add form validation
       body: ListView(
@@ -43,7 +54,7 @@ class _LogDrinkState extends State<LogDrink> {
             child: DateTimePickerFormField(
               controller: _startTimeController,
               inputType: InputType.time,
-              format: DateFormat("HH:mm a"),
+              format: DateFormat.jm(),
               editable: editable,
               decoration: InputDecoration(
                 labelText: 'Start Time',
@@ -57,7 +68,7 @@ class _LogDrinkState extends State<LogDrink> {
             child: DateTimePickerFormField(
               controller: _endTimeController,
               inputType: InputType.time,
-              format: DateFormat("HH:mm a"),
+              format: DateFormat.jm(),
               editable: editable,
               decoration: InputDecoration(
                 labelText: 'End Time',

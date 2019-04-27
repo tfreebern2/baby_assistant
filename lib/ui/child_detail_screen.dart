@@ -58,12 +58,10 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
-                children: <Widget>[
-                  _buildLastDrinkActivity(_drinkList)
-                ],
+                children: <Widget>[_buildLastDrinkActivity(_drinkList)],
               ),
             ),
-            Padding(
+              Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
                 child: RaisedButton(
@@ -218,11 +216,20 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
   Widget _buildLastDrinkActivity(List<DrinkActivity> drinkList) {
     return FutureBuilder(
         future: _readDrinkList(),
-        builder: (BuildContext context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+        builder: (BuildContext context,
+            AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
           if (snapshot.data == null || snapshot.data.length == 0) {
             return Card(
-              child: ListTile(
-                title: Text('No recent Drink Activity'),
+              child: Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: ListTile(
+                  title: Center(
+                      child: Text(
+                    'No recent Drink Activity',
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                  )),
+                ),
               ),
             );
           } else {
