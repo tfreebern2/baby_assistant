@@ -2,6 +2,7 @@ import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/model/drink_activity.dart';
 import 'package:baby_assistant/ui/home.dart';
 import 'package:baby_assistant/ui/list/child_drink_list.dart';
+import 'package:baby_assistant/ui/log/log_ate_activity.dart';
 import 'package:baby_assistant/ui/log/log_drink_activity.dart';
 import 'package:baby_assistant/util/database_client.dart';
 import 'package:baby_assistant/util/date_helper.dart';
@@ -148,7 +149,16 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                   child: ListTile(
                     title: Icon(Icons.restaurant),
                   ),
-                  onPressed: () => debugPrint("Eat"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LogAte(
+                            child: widget.child,
+                            childId: widget.child.id,
+                          ),
+                        ));
+                  },
                 ),
               ),
             ),

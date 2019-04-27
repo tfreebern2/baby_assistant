@@ -2,13 +2,8 @@ import 'package:baby_assistant/model/child.dart';
 import 'package:flutter/material.dart';
 
 class AteActivity {
-  AteActivity(
-    this._date,
-    this._startTime,
-    this._endTime,
-    this._description,
-    this._amount,
-  );
+  AteActivity(this._date, this._startTime, this._endTime, this._description,
+      this._amount, this._childId);
 
   int _id;
   int _childId;
@@ -38,11 +33,17 @@ class AteActivity {
 
   // Getters
   int get id => _id;
+
   int get childId => _childId;
+
   String get date => _date;
+
   String get startTime => _startTime;
+
   String get endTime => _endTime;
+
   String get description => _description;
+
   String get amount => _amount;
 
   Map<String, dynamic> toMap() {

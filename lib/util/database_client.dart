@@ -49,7 +49,7 @@ class DatabaseHelper {
   initDB() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentDirectory.path,
-        "baby5e.db"); //home://directory/files/notodo_db.db
+        "baby1c.db"); //home://directory/files/notodo_db.db
 
     var ourDB = await openDatabase(path, version: 1, onCreate: _onCreate);
     return ourDB;
