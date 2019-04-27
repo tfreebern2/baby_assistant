@@ -21,11 +21,11 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
   List<DrinkActivity> _drinkList = <DrinkActivity>[];
   double _opacity = 0.0;
 
-
-//  @override
-//  void initState() {
-//    super.initState();
-//  }
+  @override
+  void initState() {
+    super.initState();
+    _opacity = 0.0;
+  }
 
   @override
   Widget build(BuildContext context) {

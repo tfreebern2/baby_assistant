@@ -1,5 +1,4 @@
 import 'package:baby_assistant/model/child.dart';
-import 'package:baby_assistant/ui/child_drink_log_screen.dart';
 import 'package:flutter/material.dart';
 
 class DrinkActivity extends StatelessWidget {

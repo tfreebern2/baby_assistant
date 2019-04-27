@@ -2,6 +2,7 @@ import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/model/drink_activity.dart';
 import 'package:baby_assistant/ui/child_detail_screen.dart';
 import 'package:baby_assistant/util/database_client.dart';
+import 'package:baby_assistant/util/date_helper.dart';
 import 'package:flutter/material.dart';
 
 class ChildDrinkLogScreen extends StatefulWidget {
@@ -28,6 +29,7 @@ class _ChildDrinkLogScreenState extends State<ChildDrinkLogScreen> {
     return Scaffold(
       backgroundColor: Colors.blueGrey,
       appBar: AppBar(
+        title: Text(widget.child.firstName),
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {
@@ -42,6 +44,20 @@ class _ChildDrinkLogScreenState extends State<ChildDrinkLogScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
+            child: Text(
+              'Drink Logs',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.0,
+                  fontStyle: FontStyle.italic),
+            ),
+          ),
+          Text(
+            dateNowFormatted(),
+            style: TextStyle(color: Colors.white, fontSize: 16.0),
+          ),
           Expanded(
             child: ListView.builder(
                 padding: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
