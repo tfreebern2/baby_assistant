@@ -1,10 +1,6 @@
 import 'package:baby_assistant/model/child.dart';
 import 'package:flutter/material.dart';
 
-//enum Unit { ounce }
-//
-//const Map<Unit, String> unitsOfMeasurement = {Unit.ounce: 'ounce(s)'};
-
 class AteActivity {
   AteActivity(
     this._date,
@@ -78,3 +74,7 @@ class AteActivity {
     this._id = map["id"];
   }
 }
+
+//enum Unit { ounce }
+//
+//const Map<Unit, String> unitsOfMeasurement = {Unit.ounce: 'ounce(s)'};

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:async';
 
+import 'package:baby_assistant/model/ate_activity.dart';
 import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/model/drink_activity.dart';
 import 'package:baby_assistant/util/date_helper.dart';
@@ -19,14 +20,10 @@ class DatabaseHelper {
   final String columnBirthdate = "birthdate";
   final String columnChildId = "childId";
 
-  final String tableRoutine = "routineTable";
   final String columnDate = "date";
-  final String columnAteActivityId = "ate_activity_id";
-  final String columnDrinkActivityId = "drink_activity_id";
-  final String columnNapActivityId = "nap_activity_id";
-  final String columnChangeActivityId = "change_activity_id";
 
   final String tableDrinkActivity = "drinkActivityTable";
+  final String tableAteActivity = "ateActivityTable";
 
   // id
   // date
@@ -65,6 +62,9 @@ class DatabaseHelper {
         "CREATE TABLE $tableDrinkActivity(id INTEGER PRIMARY KEY, $columnChildId REFERENCES child (id), $columnDate TEXT, "
         "$columnStartTime TEXT, $columnEndTime TEXT, $columnDescription TEXT, $columnAmount TEXT, "
         "$columnUnit TEXT)");
+    await db.execute(
+        "CREATE TABLE $tableAteActivity(id INTEGER PRIMARY KEY, $columnChildId REFERENCES child (id), $columnDate TEXT, "
+        "$columnStartTime TEXT, $columnEndTime TEXT, $columnDescription TEXT, $columnAmount TEXT)");
   }
 
   // Child
@@ -139,6 +139,37 @@ class DatabaseHelper {
         .delete(tableDrinkActivity, where: "$columnId = ?", whereArgs: [id]);
   }
 
+  // Ate Activity
+  Future<int> saveAteActivity(AteActivity ateActivity) async {
+    var dbClient = await db;
+    var result =
+        await dbClient.insert("$tableAteActivity", ateActivity.toMap());
+    return result;
+  }
+
+  Future<AteActivity> getAteActivity(int id, int childId) async {
+    var dbClient = await db;
+    var result = await dbClient.rawQuery(
+        "SELECT * FROM $tableAteActivity WHERE $columnId = $id AND $columnChildId = $childId");
+    if (result.length == 0) return null;
+    return AteActivity.fromMap(result.first);
+  }
+
+  Future<List> getCurrentAteActivities(int childId) async {
+    var dbClient = await db;
+    String currentDate = dateNowFormattedForDb();
+    var result = await dbClient.rawQuery(
+        "SELECT * FROM $tableAteActivity WHERE $columnChildId = $childId AND $columnDate = $currentDate");
+    return result.toList();
+  }
+
+  Future<int> deleteAteActivity(int id) async {
+    var dbClient = await db;
+    return await dbClient
+        .delete(tableAteActivity, where: "$columnId = ?", whereArgs: [id]);
+  }
+
+  // Close DB Client
   Future close() async {
     var dbClient = await db;
     return dbClient.close();
