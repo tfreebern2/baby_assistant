@@ -1,7 +1,7 @@
 import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/model/drink_activity.dart';
 import 'package:baby_assistant/ui/child_detail_screen.dart';
-import 'package:baby_assistant/ui/child_drink_log_screen.dart';
+import 'package:baby_assistant/ui/list/child_drink_list.dart';
 import 'package:baby_assistant/util/database_client.dart';
 import 'package:baby_assistant/util/date_helper.dart';
 import 'package:flutter/material.dart';

@@ -5,16 +5,16 @@ import 'package:baby_assistant/util/database_client.dart';
 import 'package:baby_assistant/util/date_helper.dart';
 import 'package:flutter/material.dart';
 
-class ChildDrinkLogScreen extends StatefulWidget {
+class ChildDrinkList extends StatefulWidget {
   final Child child;
 
-  const ChildDrinkLogScreen({Key key, this.child}) : super(key: key);
+  const ChildDrinkList({Key key, this.child}) : super(key: key);
 
   @override
-  _ChildDrinkLogScreenState createState() => _ChildDrinkLogScreenState();
+  _ChildDrinkListState createState() => _ChildDrinkListState();
 }
 
-class _ChildDrinkLogScreenState extends State<ChildDrinkLogScreen> {
+class _ChildDrinkListState extends State<ChildDrinkList> {
   var db = new DatabaseHelper();
   final List<DrinkActivity> _drinkList = <DrinkActivity>[];
 

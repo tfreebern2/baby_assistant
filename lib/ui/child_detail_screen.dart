@@ -1,8 +1,8 @@
 import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/model/drink_activity.dart';
-import 'package:baby_assistant/ui/child_drink_log_screen.dart';
 import 'package:baby_assistant/ui/home.dart';
-import 'package:baby_assistant/ui/log_drink_screen.dart';
+import 'package:baby_assistant/ui/list/child_drink_list.dart';
+import 'package:baby_assistant/ui/log/log_drink_activity.dart';
 import 'package:baby_assistant/util/database_client.dart';
 import 'package:baby_assistant/util/date_helper.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +71,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ChildDrinkLogScreen(
+                          builder: (context) => ChildDrinkList(
                                 child: widget.child,
                               ),
                         ));
