@@ -279,7 +279,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                 child: ListTile(
                   title: Center(
                       child: Text(
-                    'No recent Drink Activity',
+                    'No recent Ate Activity',
                     style:
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                   )),
@@ -287,10 +287,42 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
               ),
             );
           } else {
+            Map<String, dynamic> map = snapshot.data.removeAt(0);
             return Card(
               child: ListTile(
-                title: Text(ateList.last.description),
-              ),
+                  title: Container(
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Child - Ate',
+                        style: TextStyle(
+                            fontSize: 18.0, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Start Time: ${map['start_time']}"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("End Time: ${map['end_time']}"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Description: ${map['description']}"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "${map['amount']} ounce(s)",
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
+                    )
+                  ],
+                ),
+              )),
             );
           }
         });

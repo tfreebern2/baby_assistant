@@ -84,7 +84,7 @@ class _LogAteState extends State<LogAte> {
               controller: _descriptionController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                  labelText: 'Desription',
+                  labelText: 'Description',
                   hintText: 'Enter any details'),
             ),
           ),
