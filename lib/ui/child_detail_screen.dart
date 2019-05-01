@@ -2,6 +2,7 @@ import 'package:baby_assistant/model/ate_activity.dart';
 import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/model/drink_activity.dart';
 import 'package:baby_assistant/ui/home.dart';
+import 'package:baby_assistant/ui/list/child_ate_list.dart';
 import 'package:baby_assistant/ui/list/child_drink_list.dart';
 import 'package:baby_assistant/ui/log/log_ate_activity.dart';
 import 'package:baby_assistant/ui/log/log_drink_activity.dart';
@@ -28,6 +29,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
   void initState() {
     super.initState();
     _opacity = 0.0;
+    _readAteList();
   }
 
   @override
@@ -257,74 +259,103 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
         });
   }
 
-  Future<List<Map<String, dynamic>>> _readAteList() async {
+  _readAteList() async {
     List ateActivityList = await db.getCurrentAteActivities(widget.child.id);
     ateActivityList.forEach((item) {
       setState(() {
         _ateList.add(AteActivity.map(item));
       });
     });
-    return ateActivityList;
   }
-
+  
   Widget _buildLastAteActivity(List<AteActivity> ateList) {
-    return FutureBuilder(
-        future: _readAteList(),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-          if (snapshot.data == null || snapshot.data.length == 0) {
-            return Card(
-              child: Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: ListTile(
-                  title: Center(
-                      child: Text(
-                    'No recent Ate Activity',
-                    style:
-                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                  )),
-                ),
-              ),
-            );
-          } else {
-            Map<String, dynamic> map = snapshot.data.removeAt(0);
-            return Card(
+    if (ateList.length == 0) {
+      return Card(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(30.0),
               child: ListTile(
-                  title: Container(
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Child - Ate',
-                        style: TextStyle(
-                            fontSize: 18.0, fontWeight: FontWeight.bold),
-                      ),
+                title: Center(
+                    child: Text(
+                      'No recent Ate Activity',
+                      style:
+                      TextStyle(
+                          fontSize: 18.0, fontWeight: FontWeight.bold),
+                    )),
+              ),
+            ),
+            RaisedButton(
+              child: Text('View Ate Logs'),
+              color: Colors.blue,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ChildAteList(
+                              child: widget.child,
+                            )));
+              },
+            )
+          ],
+        ),
+      );
+    } else {
+      return Card(
+        child: ListTile(
+            title: Container(
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Child - Ate',
+                      style: TextStyle(
+                          fontSize: 18.0, fontWeight: FontWeight.bold),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text("Start Time: ${map['start_time']}"),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Start Time: " + ateList.last.startTime),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("End Time: " + ateList.last.endTime),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                        "Description: " + ateList.last.description),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      ateList.last.amount + " ounce(s)",
+                      style: TextStyle(fontStyle: FontStyle.italic),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text("End Time: ${map['end_time']}"),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: RaisedButton(
+                      child: Text('View Ate Logs'),
+                      color: Colors.blue,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ChildAteList(
+                                      child: widget.child,
+                                    )));
+                      },
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text("Description: ${map['description']}"),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "${map['amount']} ounce(s)",
-                        style: TextStyle(fontStyle: FontStyle.italic),
-                      ),
-                    )
-                  ],
-                ),
-              )),
-            );
-          }
-        });
+                  )
+                ],
+              ),
+            )),
+      );
+    }
   }
 }
+
