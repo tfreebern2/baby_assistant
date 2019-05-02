@@ -8,12 +8,14 @@ import 'package:baby_assistant/ui/log/log_ate_activity.dart';
 import 'package:baby_assistant/ui/log/log_drink_activity.dart';
 import 'package:baby_assistant/util/database_client.dart';
 import 'package:baby_assistant/util/date_helper.dart';
+import 'package:baby_assistant/widget/fab_list.dart';
 import 'package:flutter/material.dart';
 
 class ChildDetailScreen extends StatefulWidget {
   final Child child;
+  final FabList fabList;
 
-  const ChildDetailScreen({Key key, this.child}) : super(key: key);
+  const ChildDetailScreen({Key key, this.child, this.fabList}) : super(key: key);
 
   @override
   _ChildDetailScreenState createState() => _ChildDetailScreenState();
@@ -23,12 +25,10 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
   var db = new DatabaseHelper();
   List<DrinkActivity> _drinkList = <DrinkActivity>[];
   List<AteActivity> _ateList = <AteActivity>[];
-  double _opacity = 0.0;
 
   @override
   void initState() {
     super.initState();
-    _opacity = 0.0;
     _readDrinkList();
     _readAteList();
   }
@@ -73,7 +73,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
             ),
           ],
         ),
-        floatingActionButton: _buildFabList());
+        floatingActionButton: FabList(child: widget.child,));
   }
 
   _readDrinkList() async {
@@ -276,131 +276,5 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
     }
   }
 
-  Widget _buildFabList() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: AnimatedOpacity(
-            duration: Duration(milliseconds: 250),
-            opacity: _opacity,
-            child: Container(
-              height: 45.0,
-              width: 45.0,
-              child: FittedBox(
-                child: FloatingActionButton(
-                  heroTag: null,
-                  backgroundColor: Colors.grey,
-                  tooltip: 'Log Nap Activity',
-                  child: ListTile(
-                    title: Icon(Icons.local_hotel),
-                  ),
-                  onPressed: () => debugPrint("Nap"),
-                ),
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: AnimatedOpacity(
-            duration: Duration(milliseconds: 250),
-            opacity: _opacity,
-            child: Container(
-              height: 45.0,
-              width: 45.0,
-              child: FittedBox(
-                child: FloatingActionButton(
-                  heroTag: null,
-                  backgroundColor: Colors.grey,
-                  tooltip: 'Log Changing Activity',
-                  child: ListTile(
-                    title: Icon(Icons.child_care),
-                  ),
-                  onPressed: () => debugPrint("Change"),
-                ),
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: AnimatedOpacity(
-            duration: Duration(milliseconds: 250),
-            opacity: _opacity,
-            child: Container(
-              height: 45.0,
-              width: 45.0,
-              child: FittedBox(
-                child: FloatingActionButton(
-                  heroTag: null,
-                  backgroundColor: Colors.grey,
-                  tooltip: 'Log Eat Activity',
-                  child: ListTile(
-                    title: Icon(Icons.restaurant),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LogAte(
-                            child: widget.child,
-                            childId: widget.child.id,
-                          ),
-                        ));
-                  },
-                ),
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: AnimatedOpacity(
-            duration: Duration(milliseconds: 250),
-            opacity: _opacity,
-            child: Container(
-              height: 45.0,
-              width: 45.0,
-              child: FittedBox(
-                child: FloatingActionButton(
-                  heroTag: null,
-                  backgroundColor: Colors.grey,
-                  tooltip: 'Log Drink Activity',
-                  child: ListTile(
-                    title: Icon(Icons.local_drink),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LogDrink(
-                            child: widget.child,
-                            childId: widget.child.id,
-                          ),
-                        ));
-                  },
-                ),
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: FloatingActionButton(
-              tooltip: 'Add Activity',
-              child: ListTile(
-                title: Icon(Icons.menu),
-              ),
-              onPressed: () {
-                setState(() {
-                  _opacity = _opacity == 0.0 ? 1.0 : 0.0;
-                });
-              }),
-        ),
-      ],
-    );
-  }
 }
 
