@@ -65,14 +65,40 @@ class _ChildDrinkListState extends State<ChildDrinkList> {
                 itemCount: _drinkList.length,
                 itemBuilder: (_, int index) {
                   return Card(
-                    child: ListTile(
-                      title: _drinkList[index],
-                      onTap: () {
-                        int id = _drinkList[index].id;
-                        _showDeleteDrinkDialog(id);
-                      },
-                    ),
-                  );
+                      child: ListTile(
+                        onLongPress: () {
+                          _showDeleteDrinkDialog(_drinkList[index].id);
+                        },
+                        title: Container(
+                            child: Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'Child - Drank',
+                                    style: TextStyle(
+                                        fontSize: 18.0, fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child:
+                                  Text("Start Time: " + _drinkList[index].startTime),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text("End Time: " + _drinkList[index].endTime),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    _drinkList[index].amount + " ounce(s)",
+                                    style: TextStyle(fontStyle: FontStyle.italic),
+                                  ),
+                                )
+                              ],
+                            )),
+                      ));
                 }),
           ),
         ],

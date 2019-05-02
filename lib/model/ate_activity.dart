@@ -1,6 +1,3 @@
-import 'package:baby_assistant/model/child.dart';
-import 'package:flutter/material.dart';
-
 class AteActivity {
   AteActivity(this._date, this._startTime, this._endTime, this._description,
       this._amount, this._childId);
@@ -13,13 +10,6 @@ class AteActivity {
   String _description;
   String _amount;
 
-//  Child child;
-
-//  // unit of measurement
-//  Unit unit;
-//
-//  // type of food
-//  String type;
 
   AteActivity.map(dynamic obj) {
     this._id = obj["id"];
@@ -33,17 +23,11 @@ class AteActivity {
 
   // Getters
   int get id => _id;
-
   int get childId => _childId;
-
   String get date => _date;
-
   String get startTime => _startTime;
-
   String get endTime => _endTime;
-
   String get description => _description;
-
   String get amount => _amount;
 
   Map<String, dynamic> toMap() {
@@ -64,18 +48,12 @@ class AteActivity {
   }
 
   AteActivity.fromMap(Map<String, dynamic> map) {
+    this._id = map["id"];
+    this._childId = map["childId"];
     this._date = map["date"];
     this._startTime = map["start_time"];
     this._endTime = map["end_time"];
     this._description = map["description"];
     this._amount = map["amount"];
-//    this._unit = map["unit"];
-    this._childId = map["childId"];
-
-    this._id = map["id"];
   }
 }
-
-//enum Unit { ounce }
-//
-//const Map<Unit, String> unitsOfMeasurement = {Unit.ounce: 'ounce(s)'};

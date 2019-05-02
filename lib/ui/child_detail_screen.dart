@@ -29,6 +29,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
   void initState() {
     super.initState();
     _opacity = 0.0;
+    _readDrinkList();
     _readAteList();
   }
 
@@ -65,24 +66,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
               child: Column(
                 children: <Widget>[
                   _buildLastDrinkActivity(_drinkList),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: RaisedButton(
-                        child: Text('View Drink Log'),
-                        color: Colors.blue,
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ChildDrinkList(
-                                      child: widget.child,
-                                    ),
-                              ));
-                        },
-                      ),
-                    ),
-                  ),
+                  SizedBox(height: 10.0,),
                   _buildLastAteActivity(_ateList)
                 ],
               ),
@@ -90,6 +74,206 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
           ],
         ),
         floatingActionButton: _buildFabList());
+  }
+
+  _readDrinkList() async {
+    List drinkActivityList =
+        await db.getCurrentDrinkActivities(widget.child.id);
+    drinkActivityList.forEach((item) {
+      setState(() {
+        _drinkList.add(DrinkActivity.map(item));
+      });
+    });
+  }
+
+  Widget _buildLastDrinkActivity(List<DrinkActivity> drinkList) {
+    if (drinkList.length == 0) {
+      return Card(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: ListTile(
+                title: Center(
+                    child: Text(
+                      'No recent Drink Activity',
+                      style:
+                      TextStyle(
+                          fontSize: 18.0, fontWeight: FontWeight.bold),
+                    )),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RaisedButton(
+                child: Text('View Drink Logs'),
+                color: Colors.blue,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ChildDrinkList(
+                                child: widget.child,
+                              )));
+                },
+              ),
+            )
+          ],
+        ),
+      );
+    } else {
+      return Card(
+        child: ListTile(
+            title: Container(
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Child - Drank',
+                      style: TextStyle(
+                          fontSize: 18.0, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Start Time: " + drinkList.last.startTime),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("End Time: " + drinkList.last.endTime),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      drinkList.last.amount + " ounce(s)",
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: RaisedButton(
+                      child: Text('View Drink Logs'),
+                      color: Colors.blue,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ChildDrinkList(
+                                      child: widget.child,
+                                    )));
+                      },
+                    ),
+                  )
+                ],
+              ),
+            )),
+      );
+    }
+  }
+
+  _readAteList() async {
+    List ateActivityList = await db.getCurrentAteActivities(widget.child.id);
+    ateActivityList.forEach((item) {
+      setState(() {
+        _ateList.add(AteActivity.map(item));
+      });
+    });
+  }
+  
+  Widget _buildLastAteActivity(List<AteActivity> ateList) {
+    if (ateList.length == 0) {
+      return Card(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: ListTile(
+                title: Center(
+                    child: Text(
+                      'No recent Ate Activity',
+                      style:
+                      TextStyle(
+                          fontSize: 18.0, fontWeight: FontWeight.bold),
+                    )),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RaisedButton(
+                child: Text('View Ate Logs'),
+                color: Colors.blue,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ChildAteList(
+                                child: widget.child,
+                              )));
+                },
+              ),
+            )
+          ],
+        ),
+      );
+    } else {
+      return Card(
+        child: ListTile(
+            title: Container(
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Child - Ate',
+                      style: TextStyle(
+                          fontSize: 18.0, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Start Time: " + ateList.last.startTime),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("End Time: " + ateList.last.endTime),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                        "Description: " + ateList.last.description),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      ateList.last.amount + " ounce(s)",
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: RaisedButton(
+                      child: Text('View Ate Logs'),
+                      color: Colors.blue,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ChildAteList(
+                                      child: widget.child,
+                                    )));
+                      },
+                    ),
+                  )
+                ],
+              ),
+            )),
+      );
+    }
   }
 
   Widget _buildFabList() {
@@ -161,9 +345,9 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => LogAte(
-                                child: widget.child,
-                                childId: widget.child.id,
-                              ),
+                            child: widget.child,
+                            childId: widget.child.id,
+                          ),
                         ));
                   },
                 ),
@@ -192,9 +376,9 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => LogDrink(
-                                child: widget.child,
-                                childId: widget.child.id,
-                              ),
+                            child: widget.child,
+                            childId: widget.child.id,
+                          ),
                         ));
                   },
                 ),
@@ -217,145 +401,6 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
         ),
       ],
     );
-  }
-
-  Future<List<Map<String, dynamic>>> _readDrinkList() async {
-    List drinkActivityList =
-        await db.getCurrentDrinkActivities(widget.child.id);
-    drinkActivityList.forEach((item) {
-      setState(() {
-        _drinkList.add(DrinkActivity.map(item));
-      });
-    });
-    return drinkActivityList;
-  }
-
-  Widget _buildLastDrinkActivity(List<DrinkActivity> drinkList) {
-    return FutureBuilder(
-        future: _readDrinkList(),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-          if (snapshot.data == null || snapshot.data.length == 0) {
-            return Card(
-              child: Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: ListTile(
-                  title: Center(
-                      child: Text(
-                    'No recent Drink Activity',
-                    style:
-                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                  )),
-                ),
-              ),
-            );
-          } else {
-            return Card(
-              child: ListTile(
-                title: drinkList.last,
-              ),
-            );
-          }
-        });
-  }
-
-  _readAteList() async {
-    List ateActivityList = await db.getCurrentAteActivities(widget.child.id);
-    ateActivityList.forEach((item) {
-      setState(() {
-        _ateList.add(AteActivity.map(item));
-      });
-    });
-  }
-  
-  Widget _buildLastAteActivity(List<AteActivity> ateList) {
-    if (ateList.length == 0) {
-      return Card(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: ListTile(
-                title: Center(
-                    child: Text(
-                      'No recent Ate Activity',
-                      style:
-                      TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
-                    )),
-              ),
-            ),
-            RaisedButton(
-              child: Text('View Ate Logs'),
-              color: Colors.blue,
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            ChildAteList(
-                              child: widget.child,
-                            )));
-              },
-            )
-          ],
-        ),
-      );
-    } else {
-      return Card(
-        child: ListTile(
-            title: Container(
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Child - Ate',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text("Start Time: " + ateList.last.startTime),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text("End Time: " + ateList.last.endTime),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                        "Description: " + ateList.last.description),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      ateList.last.amount + " ounce(s)",
-                      style: TextStyle(fontStyle: FontStyle.italic),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: RaisedButton(
-                      child: Text('View Ate Logs'),
-                      color: Colors.blue,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    ChildAteList(
-                                      child: widget.child,
-                                    )));
-                      },
-                    ),
-                  )
-                ],
-              ),
-            )),
-      );
-    }
   }
 }
 
