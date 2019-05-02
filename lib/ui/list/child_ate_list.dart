@@ -68,6 +68,9 @@ class _ChildAteListState extends State<ChildAteList> {
                 itemBuilder: (_, int index) {
                   return Card(
                       child: ListTile(
+                        onLongPress: () {
+                          _deleteAteActivity(_ateList[index].id);
+                        },
                     title: Container(
                         child: Column(
                       children: <Widget>[
@@ -115,5 +118,44 @@ class _ChildAteListState extends State<ChildAteList> {
     ateActivityList.forEach((item) => setState(() {
           _ateList.add(AteActivity.map(item));
         }));
+  }
+
+  _deleteAteActivity(int id) async {
+    await db.deleteDrinkActivity(id);
+    setState(() {
+      _ateList.removeWhere((item) => item.id == id);
+    });
+  }
+
+  void _showDeleteAteDialog(int id) {
+    var alert = AlertDialog(
+      content: Row(
+        children: <Widget>[
+          Expanded(
+              child: Text('Are you sure you want to delete this activity?'))
+        ],
+      ),
+      actions: <Widget>[
+        FlatButton(
+          onPressed: () {
+            _deleteAteActivity(id);
+            // removes dialog box
+            Navigator.pop(context);
+          },
+          child: Text('Delete'),
+        ),
+        FlatButton(
+          onPressed: () {
+            return Navigator.pop(context);
+          },
+          child: Text("Cancel"),
+        ),
+      ],
+    );
+    showDialog(
+        context: context,
+        builder: (_) {
+          return alert;
+        });
   }
 }
