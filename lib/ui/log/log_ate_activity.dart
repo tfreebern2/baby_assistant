@@ -82,7 +82,7 @@ class _LogAteState extends State<LogAte> {
             padding: const EdgeInsets.all(20.0),
             child: TextFormField(
               controller: _descriptionController,
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.text,
               decoration: InputDecoration(
                   labelText: 'Description',
                   hintText: 'Enter any details'),
