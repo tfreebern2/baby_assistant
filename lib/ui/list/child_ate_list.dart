@@ -69,7 +69,7 @@ class _ChildAteListState extends State<ChildAteList> {
                   return Card(
                       child: ListTile(
                         onLongPress: () {
-                          _deleteAteActivity(_ateList[index].id);
+                          _showDeleteAteDialog(_ateList[index].id);
                         },
                     title: Container(
                         child: Column(
@@ -121,7 +121,7 @@ class _ChildAteListState extends State<ChildAteList> {
   }
 
   _deleteAteActivity(int id) async {
-    await db.deleteDrinkActivity(id);
+    await db.deleteAteActivity(id);
     setState(() {
       _ateList.removeWhere((item) => item.id == id);
     });
