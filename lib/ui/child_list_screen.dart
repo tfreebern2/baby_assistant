@@ -37,14 +37,45 @@ class _ChildListScreenState extends State<ChildListScreen> {
       backgroundColor: Colors.blueGrey,
       body: Column(
         children: <Widget>[
-          Flexible(
+          Expanded(
             child: ListView.builder(
               padding: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
               itemCount: _childList.length,
               itemBuilder: (_, int index) {
                 return Card(
                   child: ListTile(
-                    title: _childList[index],
+                    title: Container(
+                      margin: const EdgeInsets.all(8.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: Text(
+                                _childList[index].firstName.substring(0, 1),
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              height: 30.0,
+                              width: 30.0,
+                              decoration: BoxDecoration(
+                                  color: Colors.blue, shape: BoxShape.circle),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 9.0, left: 5.0),
+                            child: Text(
+                              _childList[index].firstName,
+                              style: TextStyle(
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.9),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                     onTap: () {
                       Navigator.push(
                           context,
