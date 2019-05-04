@@ -4,14 +4,14 @@ class Child {
   int _id;
   String _firstName;
 
+  // Getters
+  int get id => _id;
+  String get firstName => _firstName;
+
   Child.map(dynamic obj) {
     this._id = obj["id"];
     this._firstName = obj["first_name"];
   }
-
-  // Getters
-  int get id => _id;
-  String get firstName => _firstName;
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();

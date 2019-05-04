@@ -10,6 +10,15 @@ class DrinkActivity {
   String _description;
   String _amount;
 
+  // Getters
+  int get id => _id;
+  int get childId => _childId;
+  String get date => _date;
+  String get startTime => _startTime;
+  String get endTime => _endTime;
+  String get description => _description;
+  String get amount => _amount;
+
   DrinkActivity.map(dynamic obj) {
     this._id = obj["id"];
     this._childId = obj["childId"];
@@ -19,15 +28,6 @@ class DrinkActivity {
     this._description = obj["description"];
     this._amount = obj["amount"];
   }
-
-  // Getters
-  int get id => _id;
-  int get childId => _childId;
-  String get date => _date;
-  String get startTime => _startTime;
-  String get endTime => _endTime;
-  String get description => _description;
-  String get amount => _amount;
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();

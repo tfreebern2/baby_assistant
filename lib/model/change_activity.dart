@@ -1,32 +1,46 @@
-import 'package:meta/meta.dart';
-import 'package:flutter/material.dart';
-
 class ChangeActivity {
-  ChangeActivity(
-      {@required this.date,
-      @required this.time,
-      @required this.description,
-      @required this.condition});
+  ChangeActivity(this._date, this._startTime, this._endTime, this._description);
 
-  // date of change
-  final int date;
+  int _id;
+  String _date;
+  String _startTime;
+  String _endTime;
+  String _description;
 
-  // time of change
-  final int time;
+  int get id => _id;
+  String get date => _date;
+  String get startTime => _startTime;
+  String get endTime => _endTime;
+  String get description => _description;
 
-  // description of change
-  final String description;
+  ChangeActivity.map(dynamic obj) {
+    this._id = obj["id"];
+    this._date = obj["date"];
+    this._startTime = obj["startTime"];
+    this._endTime = obj["endTime"];
+    this._description = obj["description"];
+  }
 
-  // condition of change
-  final Condition condition;
+  Map<String, dynamic> toMap() {
+    var map = new Map<String, dynamic>();
+
+    if (_id != null) {
+      map["id"] = _id;
+    }
+
+    map["date"] = _date;
+    map["startTime"] = _startTime;
+    map["endTime"] = _endTime;
+    map["description"] = _description;
+
+    return map;
+  }
+
+  ChangeActivity.fromMap(Map<String, dynamic> map) {
+    this._id = map["map"];
+    this._date = map["date"];
+    this._startTime = map["startTime"];
+    this._endTime = map["endTime"];
+    this._description = map["description"];
+  }
 }
-
-enum Condition {
-  wet,
-  normalBM,
-}
-
-const Map<Condition, String> typesOfBM = {
-  Condition.wet: 'Wet',
-  Condition.normalBM: 'Normal BM'
-};
