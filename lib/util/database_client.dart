@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:async';
 
 import 'package:baby_assistant/model/ate_activity.dart';
+import 'package:baby_assistant/model/change_activity.dart';
 import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/model/drink_activity.dart';
 import 'package:baby_assistant/util/date_helper.dart';
@@ -14,19 +15,21 @@ class DatabaseHelper {
 
   factory DatabaseHelper() => _instance;
 
-  final String tableChild = "childTable";
   final String columnId = "id";
+
+  // Child
+  final String columnChildId = "childId";
   final String columnFirstName = "first_name";
   final String columnBirthdate = "birthdate";
-  final String columnChildId = "childId";
 
-  final String columnDate = "date";
-
+  // Tables
+  final String tableChild = "childTable";
   final String tableDrinkActivity = "drinkActivityTable";
   final String tableAteActivity = "ateActivityTable";
+  final String tableChangeActivity = "changeActivityTable";
 
-  // id
-  // date
+  // Generics
+  final String columnDate = "date";
   final String columnStartTime = "start_time";
   final String columnEndTime = "end_time";
   final String columnDescription = "description";
@@ -50,7 +53,6 @@ class DatabaseHelper {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentDirectory.path,
         "baby1c.db"); //home://directory/files/notodo_db.db
-
     var ourDB = await openDatabase(path, version: 1, onCreate: _onCreate);
     return ourDB;
   }
@@ -65,6 +67,9 @@ class DatabaseHelper {
     await db.execute(
         "CREATE TABLE $tableAteActivity(id INTEGER PRIMARY KEY, $columnChildId REFERENCES child (id), $columnDate TEXT, "
         "$columnStartTime TEXT, $columnEndTime TEXT, $columnDescription TEXT, $columnAmount TEXT)");
+    await db.execute(""
+        "CREATE TABLE $tableChangeActivity(id INTEGER PRIMARY KEY, $columnChildId REFERENCES child (id), $columnDate TEXT, "
+        "$columnStartTime TEXT, $columnEndTime TEXT, $columnDescription TEXT");
   }
 
   // Child
@@ -167,6 +172,36 @@ class DatabaseHelper {
     var dbClient = await db;
     return await dbClient
         .delete(tableAteActivity, where: "$columnId = ?", whereArgs: [id]);
+  }
+
+  // Change Activity
+  Future<int> saveChangeActivity(ChangeActivity changeActivity) async {
+    var dbClient = await db;
+    var result =
+        await dbClient.insert("$tableChangeActivity", changeActivity.toMap());
+    return result;
+  }
+
+  Future<ChangeActivity> getChangeActivity(int id, int childId) async {
+    var dbClient = await db;
+    var result = await dbClient.rawQuery(
+        "SELECT * FROM $tableChangeActivity WHERE $columnId = $id AND $columnChildId = $childId");
+    if (result.length == 0) return null;
+    return ChangeActivity.fromMap(result.first);
+  }
+
+  Future<List> getCurrentChangeActivities(int childId) async {
+    var dbClient = await db;
+    String currentDate = dateNowFormattedForDb();
+    var result = await dbClient.rawQuery(
+        "SELECT * FROM $tableChangeActivity WHERE $columnChildId = $childId AND $columnDate = $currentDate");
+    return result.toList();
+  }
+
+  Future<int> deleteChangeActivity(int id) async {
+    var dbClient = await db;
+    return await dbClient
+        .delete(tableChangeActivity, where: "$columnId = ?", whereArgs: [id]);
   }
 
   // Close DB Client
