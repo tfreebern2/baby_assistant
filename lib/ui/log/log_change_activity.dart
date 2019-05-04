@@ -1,3 +1,4 @@
+import 'package:baby_assistant/model/change_activity.dart';
 import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/model/drink_activity.dart';
 import 'package:baby_assistant/ui/child_detail_screen.dart';
@@ -7,17 +8,17 @@ import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
 
-class LogDrink extends StatefulWidget {
+class LogChange extends StatefulWidget {
   final Child child;
   final int childId;
 
-  const LogDrink({Key key, this.child, this.childId}) : super(key: key);
+  const LogChange({Key key, this.child, this.childId}) : super(key: key);
 
   @override
-  _LogDrinkState createState() => _LogDrinkState();
+  _LogChangeState createState() => _LogChangeState();
 }
 
-class _LogDrinkState extends State<LogDrink> {
+class _LogChangeState extends State<LogChange> {
   var db = new DatabaseHelper();
   DateTime selectedStartTime;
   DateTime selectedEndTime;
@@ -26,13 +27,13 @@ class _LogDrinkState extends State<LogDrink> {
   // Controllers
   final _startTimeController = new TextEditingController();
   final _endTimeController = new TextEditingController();
-  final _amountController = new TextEditingController();
+  final _descriptionController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Log Drink Activity'),
+        title: Text('Log Change Activity'),
         centerTitle: true,
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
@@ -57,6 +58,7 @@ class _LogDrinkState extends State<LogDrink> {
               editable: editable,
               decoration: InputDecoration(
                 labelText: 'Start Time',
+                hintText: 'Enter a starting time',
                 hasFloatingPlaceholder: false,
               ),
               onChanged: (st) => setState(() => selectedStartTime = st),
@@ -80,11 +82,11 @@ class _LogDrinkState extends State<LogDrink> {
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: TextFormField(
-              controller: _amountController,
-              keyboardType: TextInputType.number,
+              controller: _descriptionController,
+              keyboardType: TextInputType.text,
               decoration: InputDecoration(
-                  labelText: 'Amount',
-                  hintText: 'Enter the amount your child drank'),
+                  labelText: 'Description',
+                  hintText: 'Enter the condition of your child\'s BM'),
             ),
           ),
           Padding(
@@ -93,11 +95,11 @@ class _LogDrinkState extends State<LogDrink> {
                 child: Text('Save'),
                 color: Colors.grey,
                 onPressed: () {
-                  _drinkSubmitted(
+                  _changeSubmitted(
                       dateNowFormattedForDb(),
                       _startTimeController.text,
                       _endTimeController.text,
-                      _amountController.text,
+                      _descriptionController.text,
                       widget.childId);
                 }),
           ),
@@ -106,23 +108,23 @@ class _LogDrinkState extends State<LogDrink> {
     );
   }
 
-  void _drinkSubmitted(String date, String startTime, String endTime,
-      String amount, int childId) async {
+  void _changeSubmitted(String date, String startTime, String endTime,
+      String description, int childId) async {
     _startTimeController.clear();
     _endTimeController.clear();
-    _amountController.clear();
+    _descriptionController.clear();
 
-    DrinkActivity drinkActivity = new DrinkActivity(
-        date, startTime, endTime, amount, childId);
+    ChangeActivity changeActivity = new ChangeActivity(
+        childId, date, startTime, endTime, description);
 
-    await db.saveDrinkActivity(drinkActivity);
+    await db.saveChangeActivity(changeActivity);
 
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => ChildDetailScreen(
-                  child: widget.child,
-                )
+              child: widget.child,
+            )
         )
     );
   }
