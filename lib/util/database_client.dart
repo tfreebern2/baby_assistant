@@ -121,13 +121,13 @@ class DatabaseHelper {
     return result;
   }
 
-  Future<DrinkActivity> getDrinkActivity(int id, int childId) async {
+  Future<ChangeActivity> getDrinkActivity(int id, int childId) async {
     var dbClient = await db;
     var result = await dbClient.rawQuery(
         "SELECT * FROM $tableDrinkActivity WHERE $columnId = $id AND $columnChildId = $childId");
 
     if (result.length == 0) return null;
-    return DrinkActivity.fromMap(result.first);
+    return ChangeActivity.fromMap(result.first);
   }
 
   Future<List> getCurrentDrinkActivities(int childId) async {
