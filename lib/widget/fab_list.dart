@@ -1,5 +1,6 @@
 import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/ui/log/log_ate_activity.dart';
+import 'package:baby_assistant/ui/log/log_change_activity.dart';
 import 'package:baby_assistant/ui/log/log_drink_activity.dart';
 import 'package:flutter/material.dart';
 
@@ -64,7 +65,16 @@ class _FabListState extends State<FabList> {
                   child: ListTile(
                     title: Icon(Icons.child_care),
                   ),
-                  onPressed: () => debugPrint("Change"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LogChange(
+                            child: widget.child,
+                            childId: widget.child.id,
+                          ),
+                        ));
+                  },
                 ),
               ),
             ),

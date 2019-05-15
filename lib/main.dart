@@ -1,6 +1,10 @@
 import 'package:baby_assistant/ui/home.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart' as foundation;
+
+bool get isIOS => foundation.defaultTargetPlatform == TargetPlatform.iOS;
 
 void main() {
   SystemChrome.setPreferredOrientations([
@@ -12,9 +16,17 @@ void main() {
 }
 
 class BabyAssistant extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return isIOS ? CupertinoApp(
+      title: 'Baby Assistant',
+      home: Home(),
+      theme: CupertinoThemeData(
+        primaryColor: Colors.blue,
+      ),
+      debugShowCheckedModeBanner: false,
+    ) : MaterialApp(
       title: 'Baby Assistant',
       home: Home(),
       theme: ThemeData(

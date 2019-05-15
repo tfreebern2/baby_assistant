@@ -1,11 +1,11 @@
 import 'package:baby_assistant/model/ate_activity.dart';
+import 'package:baby_assistant/model/change_activity.dart';
 import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/model/drink_activity.dart';
 import 'package:baby_assistant/ui/home.dart';
 import 'package:baby_assistant/ui/list/child_ate_list.dart';
+import 'package:baby_assistant/ui/list/child_change_list.dart';
 import 'package:baby_assistant/ui/list/child_drink_list.dart';
-import 'package:baby_assistant/ui/log/log_ate_activity.dart';
-import 'package:baby_assistant/ui/log/log_drink_activity.dart';
 import 'package:baby_assistant/util/database_client.dart';
 import 'package:baby_assistant/util/date_helper.dart';
 import 'package:baby_assistant/widget/fab_list.dart';
@@ -25,12 +25,14 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
   var db = new DatabaseHelper();
   List<DrinkActivity> _drinkList = <DrinkActivity>[];
   List<AteActivity> _ateList = <AteActivity>[];
+  List<ChangeActivity> _changeList = <ChangeActivity>[];
 
   @override
   void initState() {
     super.initState();
     _readDrinkList();
     _readAteList();
+    _readChangeList();
   }
 
   @override
@@ -67,7 +69,9 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                 children: <Widget>[
                   _buildLastDrinkActivity(_drinkList),
                   SizedBox(height: 10.0,),
-                  _buildLastAteActivity(_ateList)
+                  _buildLastAteActivity(_ateList),
+                  SizedBox(height: 10.0,),
+                  _buildLastChangeActivity(_changeList)
                 ],
               ),
             ),
@@ -276,5 +280,106 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
     }
   }
 
+  _readChangeList() async {
+    List ateActivityList = await db.getCurrentAteActivities(widget.child.id);
+    ateActivityList.forEach((item) {
+      setState(() {
+        _ateList.add(AteActivity.map(item));
+      });
+    });
+  }
+
+  Widget _buildLastChangeActivity(List<ChangeActivity> changeList) {
+    if (changeList.length == 0) {
+      return Card(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: ListTile(
+                title: Center(
+                    child: Text(
+                      'No recent Change Activity',
+                      style:
+                      TextStyle(
+                          fontSize: 18.0, fontWeight: FontWeight.bold),
+                    )),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RaisedButton(
+                child: Text('View Change Logs'),
+                color: Colors.blue,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ChildChangeList(
+                                child: widget.child,
+                              )));
+                },
+              ),
+            )
+          ],
+        ),
+      );
+    } else {
+      return Card(
+        child: ListTile(
+            title: Container(
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Child - Ate',
+                      style: TextStyle(
+                          fontSize: 18.0, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Start Time: " + changeList.last.startTime),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("End Time: " + changeList.last.endTime),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                        "Description: " + changeList.last.description),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      changeList.last.description,
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: RaisedButton(
+                      child: Text('View Ate Logs'),
+                      color: Colors.blue,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ChildChangeList(
+                                      child: widget.child,
+                                    )));
+                      },
+                    ),
+                  )
+                ],
+              ),
+            )),
+      );
+    }
+  }
 }
 

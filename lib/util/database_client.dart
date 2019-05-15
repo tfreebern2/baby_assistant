@@ -52,7 +52,7 @@ class DatabaseHelper {
   initDB() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentDirectory.path,
-        "baby1c.db"); //home://directory/files/notodo_db.db
+        "baby1f.db"); //home://directory/files/notodo_db.db
     var ourDB = await openDatabase(path, version: 1, onCreate: _onCreate);
     return ourDB;
   }
@@ -67,9 +67,9 @@ class DatabaseHelper {
     await db.execute(
         "CREATE TABLE $tableAteActivity(id INTEGER PRIMARY KEY, $columnChildId REFERENCES child (id), $columnDate TEXT, "
         "$columnStartTime TEXT, $columnEndTime TEXT, $columnDescription TEXT, $columnAmount TEXT)");
-    await db.execute(""
+    await db.execute(
         "CREATE TABLE $tableChangeActivity(id INTEGER PRIMARY KEY, $columnChildId REFERENCES child (id), $columnDate TEXT, "
-        "$columnStartTime TEXT, $columnEndTime TEXT, $columnDescription TEXT");
+            "$columnStartTime TEXT, $columnEndTime TEXT, $columnDescription TEXT)");
   }
 
   // Child
