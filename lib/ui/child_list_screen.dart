@@ -1,6 +1,8 @@
 import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/ui/child_detail_screen.dart';
 import 'package:baby_assistant/util/database_client.dart';
+import 'package:baby_assistant/widget/cupertino_child_dialog.dart';
+import 'package:baby_assistant/widget/material_child_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' as foundation;
@@ -24,7 +26,7 @@ class _ChildListScreenState extends State<ChildListScreen> {
     _readChildList();
   }
 
-  void _handleSubmitted(String text) async {
+  void handleSubmitted(String text) async {
     _textEditingController.clear();
     Child child = new Child(text);
     int savedChildId = await db.saveChild(child);
@@ -40,13 +42,11 @@ class _ChildListScreenState extends State<ChildListScreen> {
   Widget build(BuildContext context) {
     if (isAndroid) {
       return Scaffold(
-        backgroundColor: Colors.blueGrey,
         body: Column(
           children: <Widget>[
             Expanded(
               child: ListView.builder(
-                padding:
-                EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
+                padding: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
                 itemCount: _childList.length,
                 itemBuilder: (_, int index) {
                   return Card(
@@ -61,16 +61,13 @@ class _ChildListScreenState extends State<ChildListScreen> {
                               child: Container(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  _childList[index]
-                                      .firstName
-                                      .substring(0, 1),
+                                  _childList[index].firstName.substring(0, 1),
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 height: 30.0,
                                 width: 30.0,
                                 decoration: BoxDecoration(
-                                    color: Colors.blue,
-                                    shape: BoxShape.circle),
+                                    color: Colors.blue, shape: BoxShape.circle),
                               ),
                             ),
                             Padding(
@@ -91,8 +88,7 @@ class _ChildListScreenState extends State<ChildListScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  ChildDetailScreen(
-                                      child: _childList[index]),
+                                  ChildDetailScreen(child: _childList[index]),
                             ));
                       },
                     ),
@@ -110,19 +106,17 @@ class _ChildListScreenState extends State<ChildListScreen> {
           child: ListTile(
             title: Icon(Icons.add),
           ),
-          onPressed: _showChildForm,
+          onPressed: _showChildFormMaterial,
         ),
       );
     } else {
       return CupertinoPageScaffold(
-        backgroundColor: Colors.blueGrey,
         child: SafeArea(
           child: Column(
             children: <Widget>[
               Expanded(
                 child: ListView.builder(
-                  padding:
-                  EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
+                  padding: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
                   itemCount: _childList.length,
                   itemBuilder: (_, int index) {
                     return Card(
@@ -137,9 +131,7 @@ class _ChildListScreenState extends State<ChildListScreen> {
                                 child: Container(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    _childList[index]
-                                        .firstName
-                                        .substring(0, 1),
+                                    _childList[index].firstName.substring(0, 1),
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   height: 30.0,
@@ -150,8 +142,7 @@ class _ChildListScreenState extends State<ChildListScreen> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                EdgeInsets.only(top: 9.0, left: 5.0),
+                                padding: EdgeInsets.only(top: 9.0, left: 5.0),
                                 child: Text(
                                   _childList[index].firstName,
                                   style: TextStyle(
@@ -168,8 +159,7 @@ class _ChildListScreenState extends State<ChildListScreen> {
                               context,
                               CupertinoPageRoute(
                                 builder: (context) =>
-                                    ChildDetailScreen(
-                                        child: _childList[index]),
+                                    ChildDetailScreen(child: _childList[index]),
                               ));
                         },
                       ),
@@ -182,6 +172,7 @@ class _ChildListScreenState extends State<ChildListScreen> {
               ),
               CupertinoButton(
                 child: Text('Add Child'),
+                color: Colors.blue,
                 onPressed: _showChildFormIos,
               )
             ],
@@ -191,87 +182,19 @@ class _ChildListScreenState extends State<ChildListScreen> {
     }
   }
 
-  void _showChildForm() {
-    var alert = AlertDialog(
-      content: Row(
-        children: <Widget>[
-          Expanded(
-            child: TextField(
-              controller: _textEditingController,
-              autofocus: true,
-              decoration: InputDecoration(
-                  labelText: "First Name",
-                  hintText: "eg. Logan, Sara, ...",
-                  icon: Icon(Icons.child_care)),
-            ),
-          )
-        ],
-      ),
-      actions: <Widget>[
-        FlatButton(
-          onPressed: () {
-            _handleSubmitted(_textEditingController.text);
-            _textEditingController.clear();
-            // removes dialog box
-            Navigator.pop(context);
-          },
-          child: Text('Save'),
-        ),
-        FlatButton(
-          onPressed: () {
-            return Navigator.pop(context);
-          },
-          child: Text("Cancel"),
-        ),
-      ],
-    );
-    showDialog(
+  Future<String> _showChildFormMaterial() {
+    return showDialog(
         context: context,
         builder: (_) {
-          return alert;
+          return MaterialChildDialog();
         });
   }
 
-   _showChildFormIos() {
-    var alert = CupertinoAlertDialog(
-      content: Row(
-        children: <Widget>[
-          Expanded(
-              child: CupertinoTextField(
-                controller: _textEditingController,
-                autofocus: true,
-                placeholder: 'eg. Logan, Sara, ...',
-//              decoration: InputDecoration(
-//                  labelText: "First Name",
-//                  hintText: "eg. Logan, Sara, ...",
-//                  icon: Icon(Icons.child_care)),
-//            ),
-              )
-          )
-        ],
-      ),
-      actions: <Widget>[
-        CupertinoButton(
-          onPressed: () {
-            _handleSubmitted(_textEditingController.text);
-            _textEditingController.clear();
-            // removes dialog box
-            Navigator.pop(context);
-          },
-          child: Text('Save'),
-        ),
-        CupertinoButton(
-          onPressed: () {
-            return Navigator.pop(context);
-          },
-          child: Text("Cancel"),
-        ),
-      ],
-    );
-    showCupertinoDialog(
+  Future<String> _showChildFormIos() {
+    return showCupertinoDialog<String>(
         context: context,
         builder: (_) {
-          return alert;
+          return CupertinoChildDialog();
         });
   }
 
@@ -284,3 +207,4 @@ class _ChildListScreenState extends State<ChildListScreen> {
     });
   }
 }
+

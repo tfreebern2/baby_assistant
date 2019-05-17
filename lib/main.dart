@@ -24,6 +24,8 @@ class BabyAssistant extends StatelessWidget {
       home: Home(),
       theme: CupertinoThemeData(
         primaryColor: Colors.blue,
+        barBackgroundColor: Colors.blue,
+        scaffoldBackgroundColor: Colors.blueGrey
       ),
       debugShowCheckedModeBanner: false,
     ) : MaterialApp(
@@ -31,6 +33,8 @@ class BabyAssistant extends StatelessWidget {
       home: Home(),
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        appBarTheme: AppBarTheme(color: Colors.blue),
+        scaffoldBackgroundColor: Colors.blueGrey
       ),
       debugShowCheckedModeBanner: false,
     );

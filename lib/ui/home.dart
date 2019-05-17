@@ -8,19 +8,24 @@ bool get isIOS => foundation.defaultTargetPlatform == TargetPlatform.iOS;
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return isIOS ? CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text('Baby Assistant'),
+    return isIOS
+        ? CupertinoPageScaffold(
+            navigationBar: CupertinoNavigationBar(
+              middle: Text(
+                'Baby Assistant',
+                style: TextStyle(color: Colors.white),
+              ),
 //        leading: Text(''), // Hiding Back Button -- hacky solution
-      ),
-      child: ChildListScreen(),
-    ) : Scaffold(
-      appBar: AppBar(
-        title: Text('Baby Assistant'),
-        leading: Text(''), // Hiding Back Button -- hacky solution
-        centerTitle: true,
-      ),
-      body: ChildListScreen(),
-    );
+            ),
+            child: ChildListScreen(),
+          )
+        : Scaffold(
+            appBar: AppBar(
+              title: Text('Baby Assistant'),
+              leading: Text(''), // Hiding Back Button -- hacky solution
+              centerTitle: true,
+            ),
+            body: ChildListScreen(),
+          );
   }
 }

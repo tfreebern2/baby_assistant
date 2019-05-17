@@ -38,7 +38,6 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.blueGrey,
         appBar: AppBar(
           leading: IconButton(
               icon: Icon(Icons.arrow_back_ios),
