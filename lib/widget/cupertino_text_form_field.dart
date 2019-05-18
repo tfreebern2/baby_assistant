@@ -17,10 +17,12 @@ class CupertinoTextFormField extends FormField<String> {
     this.controller,
     String initialValue,
     FocusNode focusNode,
-    InputDecoration decoration = const InputDecoration(),
+    BoxDecoration decoration = const BoxDecoration(),
+    String placeholder,
     TextInputType keyboardType,
     TextCapitalization textCapitalization = TextCapitalization.none,
     TextInputAction textInputAction,
+    TextStyle placeholderStyle,
     TextStyle style,
     StrutStyle strutStyle,
     TextDirection textDirection,
@@ -77,12 +79,16 @@ class CupertinoTextFormField extends FormField<String> {
         enabled: enabled,
         builder: (FormFieldState<String> field) {
           final _CupertinoTextFormFieldState state = field;
-          final InputDecoration effectiveDecoration = (decoration ?? const InputDecoration())
-              .applyDefaults(Theme.of(field.context).inputDecorationTheme);
+//          final BoxDecoration effectiveDecoration = (decoration ?? const BoxDecoration())
+//              .applyDefaults(Theme.of(field.context).inputDecorationTheme);
+//          placeholder = placeholder == null ? field.errorText : placeholder;
           return CupertinoTextField(
             controller: state._effectiveController,
             focusNode: focusNode,
+            decoration: decoration,
 //            decoration: effectiveDecoration.copyWith(errorText: field.errorText),
+            placeholder: placeholder,
+            placeholderStyle: placeholderStyle,
             keyboardType: keyboardType,
             textInputAction: textInputAction,
             style: style,

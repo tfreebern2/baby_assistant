@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/util/database_client.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,7 +34,6 @@ class _CupertinoChildDialogState extends State<CupertinoChildDialog> {
   bool _sendNewName(String name) {
     _checkNewName = name;
 
-
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
 
@@ -67,6 +64,8 @@ class _CupertinoChildDialogState extends State<CupertinoChildDialog> {
                 validator: validateName,
                 controller: _textEditingController,
                 autofocus: true,
+                placeholder: 'Logan, Sara, ...',
+                placeholderStyle: TextStyle(color: Colors.grey),
               ),
             ),
           ),
