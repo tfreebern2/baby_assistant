@@ -1,4 +1,4 @@
-import 'package:baby_assistant/ui/child_list_screen.dart';
+import 'package:baby_assistant/ui/list/child_list_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' as foundation;
