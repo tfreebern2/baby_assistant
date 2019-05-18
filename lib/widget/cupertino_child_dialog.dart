@@ -1,14 +1,16 @@
 import 'package:baby_assistant/model/child.dart';
+import 'package:baby_assistant/util/child_list.dart';
 import 'package:baby_assistant/util/database_client.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'cupertino_text_form_field.dart';
 
 class CupertinoChildDialog extends StatefulWidget {
-  final String name;
+  final List<Child> childList;
 
-  const CupertinoChildDialog({Key key, this.name}) : super(key: key);
+  const CupertinoChildDialog({Key key, this.childList}) : super(key: key);
 
   @override
   _CupertinoChildDialogState createState() => _CupertinoChildDialogState();
@@ -17,15 +19,15 @@ class CupertinoChildDialog extends StatefulWidget {
 class _CupertinoChildDialogState extends State<CupertinoChildDialog> {
   final _textEditingController = new TextEditingController();
   var db = new DatabaseHelper();
-  final _formKey = GlobalKey<FormState>();
+  final _cupertinoChildDialogKey = GlobalKey<FormState>();
   String _checkNewName;
   bool _resetValidate = false;
 
-  bool _sendNewName(String name) {
+  _sendNewName(String name) {
     _checkNewName = name;
 
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_cupertinoChildDialogKey.currentState.validate()) {
+      _cupertinoChildDialogKey.currentState.save();
 
       try {
         _handleSubmitted(name);
@@ -47,7 +49,7 @@ class _CupertinoChildDialogState extends State<CupertinoChildDialog> {
       content: Row(
         children: <Widget>[
           Form(
-            key: _formKey,
+            key: _cupertinoChildDialogKey,
             autovalidate: _resetValidate,
             child: Expanded(
               child: CupertinoTextFormField(
@@ -82,9 +84,10 @@ class _CupertinoChildDialogState extends State<CupertinoChildDialog> {
   }
 
   void _handleSubmitted(String text) async {
+    final childList = Provider.of<ChildList>(context, listen: true);
     _textEditingController.clear();
     Child child = new Child(text);
-    await db.saveChild(child);
+    childList.addChild(child);
   }
 
   String validateName(String value) {

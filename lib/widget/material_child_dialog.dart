@@ -18,22 +18,15 @@ class MaterialChildDialog extends StatefulWidget {
 class _MaterialChildDialogState extends State<MaterialChildDialog> {
   final _textEditingController = new TextEditingController();
   var db = new DatabaseHelper();
-  final _materialChildKey = GlobalKey<FormState>();
+  final _materialChildDialogKey = GlobalKey<FormState>();
   String _checkNewName;
   bool _nameValidate = false;
 
-  @override
-  void setState(fn) {
-    if(mounted){
-      super.setState(fn);
-    }
-  }
-
-  bool _sendNewName(String name) {
+  _sendNewName(String name) {
     _checkNewName = name;
 
-    if (_materialChildKey.currentState.validate()) {
-      _materialChildKey.currentState.save();
+    if (_materialChildDialogKey.currentState.validate()) {
+      _materialChildDialogKey.currentState.save();
 
       try {
         _handleSubmitted(name);
@@ -51,12 +44,11 @@ class _MaterialChildDialogState extends State<MaterialChildDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final childList = Provider.of<ChildList>(context, listen: true);
     return AlertDialog(
       content: Row(
         children: <Widget>[
           Form(
-            key: _materialChildKey,
+            key: _materialChildDialogKey,
             autovalidate: _nameValidate,
             child: Expanded(
               child: TextFormField(
