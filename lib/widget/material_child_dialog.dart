@@ -1,11 +1,15 @@
 import 'package:baby_assistant/model/child.dart';
+import 'package:baby_assistant/util/child_list.dart';
 import 'package:baby_assistant/util/database_client.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+typedef ChildListCallback = void Function(List<Child> childList);
 
 class MaterialChildDialog extends StatefulWidget {
-  final String name;
+  final List<Child> childList;
 
-  const MaterialChildDialog({Key key, this.name}) : super(key: key);
+  const MaterialChildDialog({Key key, this.childList}) : super(key: key);
 
   @override
   _MaterialChildDialogState createState() => _MaterialChildDialogState();
@@ -14,10 +18,16 @@ class MaterialChildDialog extends StatefulWidget {
 class _MaterialChildDialogState extends State<MaterialChildDialog> {
   final _textEditingController = new TextEditingController();
   var db = new DatabaseHelper();
-  final List<Child> _childList = <Child>[];
   final _materialChildKey = GlobalKey<FormState>();
   String _checkNewName;
   bool _nameValidate = false;
+
+  @override
+  void setState(fn) {
+    if(mounted){
+      super.setState(fn);
+    }
+  }
 
   bool _sendNewName(String name) {
     _checkNewName = name;
@@ -41,6 +51,7 @@ class _MaterialChildDialogState extends State<MaterialChildDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final childList = Provider.of<ChildList>(context, listen: true);
     return AlertDialog(
       content: Row(
         children: <Widget>[
@@ -81,15 +92,10 @@ class _MaterialChildDialogState extends State<MaterialChildDialog> {
   }
 
   void _handleSubmitted(String text) async {
+    final childList = Provider.of<ChildList>(context, listen: true);
     _textEditingController.clear();
     Child child = new Child(text);
-    int savedChildId = await db.saveChild(child);
-
-    Child addedChild = await db.getChild(savedChildId);
-
-    setState(() {
-      _childList.insert(0, addedChild);
-    });
+    childList.addChild(child);
   }
 
   String validateName(String value) {

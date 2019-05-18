@@ -17,19 +17,9 @@ class CupertinoChildDialog extends StatefulWidget {
 class _CupertinoChildDialogState extends State<CupertinoChildDialog> {
   final _textEditingController = new TextEditingController();
   var db = new DatabaseHelper();
-  final List<Child> _childList = <Child>[];
   final _formKey = GlobalKey<FormState>();
   String _checkNewName;
   bool _resetValidate = false;
-
-  FormFieldValidator<String> string;
-
-  @override
-  void setState(fn) {
-    if(mounted){
-      super.setState(fn);
-    }
-  }
 
   bool _sendNewName(String name) {
     _checkNewName = name;
@@ -94,13 +84,7 @@ class _CupertinoChildDialogState extends State<CupertinoChildDialog> {
   void _handleSubmitted(String text) async {
     _textEditingController.clear();
     Child child = new Child(text);
-    int savedChildId = await db.saveChild(child);
-
-    Child addedChild = await db.getChild(savedChildId);
-
-    setState(() {
-      _childList.insert(0, addedChild);
-    });
+    await db.saveChild(child);
   }
 
   String validateName(String value) {

@@ -1,45 +1,40 @@
 import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/ui/child_detail_screen.dart';
+import 'package:baby_assistant/util/child_list.dart';
 import 'package:baby_assistant/util/database_client.dart';
 import 'package:baby_assistant/widget/cupertino_child_dialog.dart';
 import 'package:baby_assistant/widget/material_child_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart' as foundation;
 
 bool get isAndroid =>
     foundation.defaultTargetPlatform == TargetPlatform.android;
 
 class ChildListScreen extends StatefulWidget {
+  const ChildListScreen({Key key}) : super(key: key);
+
   @override
   _ChildListScreenState createState() => _ChildListScreenState();
 }
 
 class _ChildListScreenState extends State<ChildListScreen> {
   var db = new DatabaseHelper();
-  final List<Child> _childList = <Child>[];
-  final _textEditingController = new TextEditingController();
+  List<Child> _childList = <Child>[];
+  Child child;
 
   @override
   void initState() {
     super.initState();
-    _readChildList();
-  }
-
-  void handleSubmitted(String text) async {
-    _textEditingController.clear();
-    Child child = new Child(text);
-    int savedChildId = await db.saveChild(child);
-
-    Child addedChild = await db.getChild(savedChildId);
-
-    setState(() {
-      _childList.insert(0, addedChild);
+    this.setState(() {
+      _readChildList();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final childList = Provider.of<ChildList>(context, listen: true);
     if (isAndroid) {
       return Scaffold(
         body: Column(
@@ -47,7 +42,7 @@ class _ChildListScreenState extends State<ChildListScreen> {
             Expanded(
               child: ListView.builder(
                 padding: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
-                itemCount: _childList.length,
+                itemCount: childList.logChildren.length,
                 itemBuilder: (_, int index) {
                   return Card(
                     child: ListTile(
@@ -61,7 +56,7 @@ class _ChildListScreenState extends State<ChildListScreen> {
                               child: Container(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  _childList[index].firstName.substring(0, 1),
+                                  childList.logChildren[index].firstName.substring(0, 1),
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 height: 30.0,
@@ -73,7 +68,7 @@ class _ChildListScreenState extends State<ChildListScreen> {
                             Padding(
                               padding: EdgeInsets.only(top: 9.0, left: 5.0),
                               child: Text(
-                                _childList[index].firstName,
+                                childList.logChildren[index].firstName,
                                 style: TextStyle(
                                     color: Colors.black54,
                                     fontWeight: FontWeight.bold,
@@ -88,7 +83,7 @@ class _ChildListScreenState extends State<ChildListScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  ChildDetailScreen(child: _childList[index]),
+                                  ChildDetailScreen(child: childList.logChildren[index]),
                             ));
                       },
                     ),
@@ -182,7 +177,7 @@ class _ChildListScreenState extends State<ChildListScreen> {
     }
   }
 
-  Future<String> _showChildFormMaterial() {
+  Future<List<Child>> _showChildFormMaterial() {
     return showDialog(
         context: context,
         builder: (_) {
@@ -198,13 +193,13 @@ class _ChildListScreenState extends State<ChildListScreen> {
         });
   }
 
-  _readChildList() async {
+  Future<List<Child>> _readChildList() async {
     List children = await db.getChildren();
     children.forEach((item) {
       setState(() {
         _childList.add(Child.map(item));
       });
     });
+    return _childList;
   }
 }
-
