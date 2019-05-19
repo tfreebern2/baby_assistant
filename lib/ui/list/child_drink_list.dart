@@ -34,7 +34,7 @@ class _ChildDrinkListState extends State<ChildDrinkList> {
       return CupertinoPageScaffold(
         backgroundColor: Colors.blueGrey,
         navigationBar: CupertinoNavigationBar(
-          middle: Text(widget.child.firstName),
+          middle: Text(widget.child.firstName, style: TextStyle(color: Colors.white),),
           leading: CupertinoButton(
               child: Icon(Icons.arrow_back_ios, color: Colors.white, size: 16.0),
               onPressed: () {
