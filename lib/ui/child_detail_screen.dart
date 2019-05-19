@@ -55,6 +55,12 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                 widget.child.firstName,
               style: TextStyle(color: Colors.white),
             ),
+            trailing: CupertinoButton(
+              child: Icon(Icons.more_horiz, color: Colors.white,),
+              onPressed: () {
+                FabList(child: widget.child);
+              },
+            ),
           ),
           child: SafeArea(
             child: ListView(
@@ -82,9 +88,8 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                       ),
                       _buildLastChangeActivity(_changeList),
                       SizedBox(
-                        height: 20.0,
+                        height: 10.0,
                       ),
-                      FabList(child: widget.child)
                     ],
                   ),
                 ),
@@ -268,12 +273,23 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                 child: Text('View Ate Logs'),
                 color: Colors.blue,
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ChildAteList(
-                                child: widget.child,
-                              )));
+                  if (isIOS) {
+                    Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) =>
+                                ChildAteList(
+                                  child: widget.child,
+                                )));
+                  } else {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                ChildAteList(
+                                  child: widget.child,
+                                )));
+                  }
                 },
               ),
             )
