@@ -46,7 +46,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
       return CupertinoPageScaffold(
           navigationBar: CupertinoNavigationBar(
             leading: CupertinoButton(
-                child: Icon(Icons.arrow_back_ios),
+                child: Icon(Icons.arrow_back_ios, color: Colors.white, size: 16.0),
                 onPressed: () {
                   Navigator.push(
                       context, CupertinoPageRoute(builder: (context) => Home()));
