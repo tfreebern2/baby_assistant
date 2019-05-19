@@ -31,6 +31,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
   List<DrinkActivity> _drinkList = <DrinkActivity>[];
   List<AteActivity> _ateList = <AteActivity>[];
   List<ChangeActivity> _changeList = <ChangeActivity>[];
+  int _activityType = 0;
 
   @override
   void initState() {
@@ -58,7 +59,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
             trailing: CupertinoButton(
               child: Icon(Icons.more_horiz, color: Colors.white,),
               onPressed: () {
-                FabList(child: widget.child);
+//                FabList(child: widget.child);
               },
             ),
           ),
@@ -74,6 +75,18 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                     ),
                   ),
                 ),
+                SizedBox(height: 20.0,),
+                CupertinoSegmentedControl<int>(
+                  children: {
+                    0: Text('Drink'),
+                    1: Text('Ate'),
+                    2: Text('Change'),
+                    3: Text('Nap')
+                  },
+                  groupValue: _activityType,
+                  onValueChanged: (type) => setState(() => _activityType = type),
+                ),
+                SizedBox(height: 20.0,),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
