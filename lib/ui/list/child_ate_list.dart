@@ -49,71 +49,73 @@ class _ChildAteListState extends State<ChildAteList> {
                             )));
               }),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
-              child: Text(
-                'Ate Logs',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18.0,
-                    fontStyle: FontStyle.italic),
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
+                child: Text(
+                  'Ate Logs',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      fontStyle: FontStyle.italic),
+                ),
               ),
-            ),
-            Text(
-              dateNowFormatted(),
-              style: TextStyle(color: Colors.white, fontSize: 16.0),
-            ),
-            Expanded(
-              child: ListView.builder(
-                  padding: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
-                  itemCount: _ateList.length,
-                  itemBuilder: (_, int index) {
-                    return Card(
-                        child: ListTile(
-                      onLongPress: () {
-                        _showDeleteAteDialog(_ateList[index].id);
-                      },
-                      title: Container(
-                          child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Child - Ate',
-                              style: TextStyle(
-                                  fontSize: 18.0, fontWeight: FontWeight.bold),
+              Text(
+                dateNowFormatted(),
+                style: TextStyle(color: Colors.white, fontSize: 16.0),
+              ),
+              Expanded(
+                child: ListView.builder(
+                    padding: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
+                    itemCount: _ateList.length,
+                    itemBuilder: (_, int index) {
+                      return Card(
+                          child: ListTile(
+                        onLongPress: () {
+                          _showDeleteAteDialog(_ateList[index].id);
+                        },
+                        title: Container(
+                            child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'Child - Ate',
+                                style: TextStyle(
+                                    fontSize: 18.0, fontWeight: FontWeight.bold),
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                                "Start Time: " + _ateList[index].startTime),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text("End Time: " + _ateList[index].endTime),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                                "Description: " + _ateList[index].description),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              _ateList[index].amount,
-                              style: TextStyle(fontStyle: FontStyle.italic),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                  "Start Time: " + _ateList[index].startTime),
                             ),
-                          )
-                        ],
-                      )),
-                    ));
-                  }),
-            ),
-          ],
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("End Time: " + _ateList[index].endTime),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                  "Description: " + _ateList[index].description),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                _ateList[index].amount,
+                                style: TextStyle(fontStyle: FontStyle.italic),
+                              ),
+                            )
+                          ],
+                        )),
+                      ));
+                    }),
+              ),
+            ],
+          ),
         ),
       );
     } else {
