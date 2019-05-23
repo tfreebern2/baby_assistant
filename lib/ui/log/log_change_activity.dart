@@ -14,9 +14,8 @@ bool get isIOS => foundation.defaultTargetPlatform == TargetPlatform.iOS;
 
 class LogChange extends StatefulWidget {
   final Child child;
-  final int childId;
 
-  const LogChange({Key key, this.child, this.childId}) : super(key: key);
+  const LogChange({Key key, this.child}) : super(key: key);
 
   @override
   _LogChangeState createState() => _LogChangeState();
@@ -107,7 +106,7 @@ class _LogChangeState extends State<LogChange> {
                           _startTimeController.text,
                           _endTimeController.text,
                           _descriptionController.text,
-                          widget.childId);
+                          widget.child.id);
                     }),
               ),
             ],
@@ -184,7 +183,7 @@ class _LogChangeState extends State<LogChange> {
                         _startTimeController.text,
                         _endTimeController.text,
                         _descriptionController.text,
-                        widget.childId);
+                        widget.child.id);
                   }),
             ),
           ],

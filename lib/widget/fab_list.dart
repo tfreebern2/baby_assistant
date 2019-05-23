@@ -70,9 +70,8 @@ class _FabListState extends State<FabList> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => LogChange(
-                            child: widget.child,
-                            childId: widget.child.id,
-                          ),
+                                child: widget.child,
+                              ),
                         ));
                   },
                 ),
@@ -102,7 +101,6 @@ class _FabListState extends State<FabList> {
                         MaterialPageRoute(
                           builder: (context) => LogAte(
                                 child: widget.child,
-                                childId: widget.child.id,
                               ),
                         ));
                   },
@@ -133,7 +131,6 @@ class _FabListState extends State<FabList> {
                         MaterialPageRoute(
                           builder: (context) => LogDrink(
                                 child: widget.child,
-                                childId: widget.child.id,
                               ),
                         ));
                   },

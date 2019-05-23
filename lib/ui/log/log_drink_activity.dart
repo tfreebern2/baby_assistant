@@ -13,9 +13,8 @@ bool get isIOS => foundation.defaultTargetPlatform == TargetPlatform.iOS;
 
 class LogDrink extends StatefulWidget {
   final Child child;
-  final int childId;
 
-  const LogDrink({Key key, this.child, this.childId}) : super(key: key);
+  const LogDrink({Key key, this.child}) : super(key: key);
 
   @override
   _LogDrinkState createState() => _LogDrinkState();
@@ -104,7 +103,7 @@ class _LogDrinkState extends State<LogDrink> {
                           _startTimeController.text,
                           _endTimeController.text,
                           _amountController.text,
-                          widget.childId);
+                          widget.child.id);
                     }),
               ),
             ],
@@ -180,7 +179,7 @@ class _LogDrinkState extends State<LogDrink> {
                         _startTimeController.text,
                         _endTimeController.text,
                         _amountController.text,
-                        widget.childId);
+                        widget.child.id);
                   }),
             ),
           ],

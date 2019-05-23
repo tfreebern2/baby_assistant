@@ -13,6 +13,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' as foundation;
 
+import 'log/log_drink_activity.dart';
+
 bool get isIOS => foundation.defaultTargetPlatform == TargetPlatform.iOS;
 
 class ChildDetailScreen extends StatefulWidget {
@@ -45,73 +47,56 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
   Widget build(BuildContext context) {
     if (isIOS) {
       return CupertinoPageScaffold(
-          navigationBar: CupertinoNavigationBar(
-            leading: CupertinoButton(
-                child: Icon(Icons.arrow_back_ios, color: Colors.white, size: 16.0),
-                onPressed: () {
-                  Navigator.push(
-                      context, CupertinoPageRoute(builder: (context) => Home()));
-                }),
-            middle: Text(
-                widget.child.firstName,
-              style: TextStyle(color: Colors.white),
-            ),
-            trailing: CupertinoButton(
-              child: Icon(Icons.more_horiz, color: Colors.white,),
+        navigationBar: CupertinoNavigationBar(
+          leading: CupertinoButton(
+              child:
+                  Icon(Icons.arrow_back_ios, color: Colors.white, size: 16.0),
               onPressed: () {
-//                FabList(child: widget.child);
-              },
-            ),
+                Navigator.push(
+                    context, CupertinoPageRoute(builder: (context) => Home()));
+              }),
+          middle: Text(
+            widget.child.firstName,
+            style: TextStyle(color: Colors.white),
           ),
-          child: SafeArea(
-            child: ListView(
-              children: <Widget>[
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
-                    child: Text(
-                      dateNowFormatted(),
-                      style: TextStyle(fontSize: 18.0, color: Colors.white),
+        ),
+        child: SafeArea(
+          child: ListView(
+            children: <Widget>[
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
+                  child: Text(
+                    dateNowFormatted(),
+                    style: TextStyle(fontSize: 18.0, color: Colors.white),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    _buildLastDrinkActivity(_drinkList),
+                    SizedBox(
+                      height: 10.0,
                     ),
-                  ),
+                    _buildLastAteActivity(_ateList),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    _buildLastChangeActivity(_changeList),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                  ],
                 ),
-                SizedBox(height: 20.0,),
-                CupertinoSegmentedControl<int>(
-                  children: {
-                    0: Text('Drink'),
-                    1: Text('Ate'),
-                    2: Text('Change'),
-                    3: Text('Nap')
-                  },
-                  groupValue: _activityType,
-                  onValueChanged: (type) => setState(() => _activityType = type),
-                ),
-                SizedBox(height: 20.0,),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: <Widget>[
-                      _buildLastDrinkActivity(_drinkList),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      _buildLastAteActivity(_ateList),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      _buildLastChangeActivity(_changeList),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-//          floatingActionButton: FabList(
-//            child: widget.child,
-//          )
+        ),
       );
     } else {
       return Scaffold(
@@ -178,14 +163,25 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
       return Card(
         child: Column(
           children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => LogDrink(
+                                child: widget.child,
+                              ))),
+                ),
+              ],
+            ),
             Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: ListTile(
-                title: Center(
-                    child: Text(
-                  'No recent Drink Activity',
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                )),
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: Text(
+                'No recent Drink Activity',
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
               ),
             ),
             Padding(
@@ -202,7 +198,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                               )));
                 },
               ),
-            )
+            ),
           ],
         ),
       );
@@ -290,16 +286,14 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
                     Navigator.push(
                         context,
                         CupertinoPageRoute(
-                            builder: (context) =>
-                                ChildAteList(
+                            builder: (context) => ChildAteList(
                                   child: widget.child,
                                 )));
                   } else {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                ChildAteList(
+                            builder: (context) => ChildAteList(
                                   child: widget.child,
                                 )));
                   }

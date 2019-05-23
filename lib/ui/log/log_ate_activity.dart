@@ -14,9 +14,8 @@ bool get isIOS => foundation.defaultTargetPlatform == TargetPlatform.iOS;
 
 class LogAte extends StatefulWidget {
   final Child child;
-  final int childId;
 
-  const LogAte({Key key, this.child, this.childId}) : super(key: key);
+  const LogAte({Key key, this.child}) : super(key: key);
 
   @override
   _LogAteState createState() => _LogAteState();
@@ -119,7 +118,7 @@ class _LogAteState extends State<LogAte> {
                           _endTimeController.text,
                           _descriptionController.text,
                           _amountController.text,
-                          widget.childId);
+                          widget.child.id);
                     }),
               ),
             ],
@@ -206,7 +205,7 @@ class _LogAteState extends State<LogAte> {
                         _endTimeController.text,
                         _descriptionController.text,
                         _amountController.text,
-                        widget.childId);
+                        widget.child.id);
                   }),
             ),
           ],
