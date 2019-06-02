@@ -13,6 +13,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' as foundation;
 
+import '../main.dart';
 import 'log/log_drink_activity.dart';
 
 bool get isIOS => foundation.defaultTargetPlatform == TargetPlatform.iOS;
@@ -48,13 +49,7 @@ class _ChildDetailScreenState extends State<ChildDetailScreen> {
     if (isIOS) {
       return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-          leading: CupertinoButton(
-              child:
-                  Icon(Icons.arrow_back_ios, color: Colors.white, size: 16.0),
-              onPressed: () {
-                Navigator.push(
-                    context, CupertinoPageRoute(builder: (context) => Home()));
-              }),
+          padding: EdgeInsetsDirectional.only(end: 20.0),
           middle: Text(
             widget.child.firstName,
             style: TextStyle(color: Colors.white),

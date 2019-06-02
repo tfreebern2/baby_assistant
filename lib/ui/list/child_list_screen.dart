@@ -1,6 +1,6 @@
 import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/ui/child_detail_screen.dart';
-import 'package:baby_assistant/util/child_list.dart';
+import 'package:baby_assistant/util/child_provider.dart';
 import 'package:baby_assistant/widget/cupertino_child_dialog.dart';
 import 'package:baby_assistant/widget/material_child_dialog.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,9 +20,15 @@ class ChildListScreen extends StatefulWidget {
 class _ChildListScreenState extends State<ChildListScreen> {
   @override
   Widget build(BuildContext context) {
-    final childList = Provider.of<ChildList>(context, listen: true);
+    final childList = Provider.of<ChildProvider>(context, listen: true);
     if (isIOS) {
       return CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+          middle: Text(
+            'Baby Assistant',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
         child: SafeArea(
           child: Column(
             children: <Widget>[
@@ -68,6 +74,7 @@ class _ChildListScreenState extends State<ChildListScreen> {
                           ),
                         ),
                         onTap: () {
+                          childList.setChild(childList.logChildren[index]);
                           Navigator.push(
                               context,
                               CupertinoPageRoute(
@@ -80,14 +87,6 @@ class _ChildListScreenState extends State<ChildListScreen> {
                   },
                 ),
               ),
-              Divider(
-                height: 20.0,
-              ),
-              CupertinoButton(
-                child: Text('Add Child'),
-                color: Colors.blue,
-                onPressed: _showChildFormIos,
-              )
             ],
           ),
         ),
