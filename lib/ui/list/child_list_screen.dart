@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart' as foundation;
+import 'package:shared_preferences/shared_preferences.dart';
 
 bool get isIOS => foundation.defaultTargetPlatform == TargetPlatform.iOS;
 
@@ -74,6 +75,7 @@ class _ChildListScreenState extends State<ChildListScreen> {
                           ),
                         ),
                         onTap: () {
+                          _storeChild(childList.logChildren[index].id);
                           childList.setChild(childList.logChildren[index]);
                           Navigator.push(
                               context,
@@ -179,4 +181,10 @@ class _ChildListScreenState extends State<ChildListScreen> {
           return CupertinoChildDialog();
         });
   }
+
+  _storeChild(int childId) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.setInt("childId", childId);
+  }
+
 }

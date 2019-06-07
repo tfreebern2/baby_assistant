@@ -1,11 +1,14 @@
 import 'package:baby_assistant/model/child.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'database_client.dart';
 
 class ChildProvider with ChangeNotifier {
   var db = new DatabaseHelper();
+  final logChildren = <Child>[];
+  Child currentChild;
 
   ChildProvider() {
     _readChildList().then((list) {
@@ -14,24 +17,24 @@ class ChildProvider with ChangeNotifier {
     });
   }
 
-  final logChildren = <Child>[];
-  var currentChild = Child;
-  Child curr;
-
   List<Child> get children {
     return logChildren.map<Child>((x) => Child.map(x)).toList();
   }
 
-  // TODO: Check to see if this works
+  Child get child {
+    return child;
+  }
+
   void setChild(Child child) {
-    curr = child;
+    currentChild = child;
     notifyListeners();
   }
 
-  Child getChild(Child child) {
-    child = curr;
-    notifyListeners();
-    return child;
+  Child initializeChild() {
+    if (currentChild == null) {
+      currentChild = logChildren[0];
+    }
+    return currentChild;
   }
 
   Future<List<Child>> _readChildList() async {

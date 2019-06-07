@@ -1,12 +1,15 @@
 import 'package:baby_assistant/ui/child_detail_screen.dart';
+import 'package:baby_assistant/ui/list/child_list_screen.dart';
 import 'package:baby_assistant/util/child_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart' as foundation;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'model/child.dart';
+
 
 bool get isIOS => foundation.defaultTargetPlatform == TargetPlatform.iOS;
 
@@ -83,10 +86,10 @@ class AdaptiveMainScreen extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         tabBuilder: (context, index) {
           if (index == 0) {
-            return CupertinoTabView(builder: (context) => ChildHome());
+            return CupertinoTabView(builder: (context) => ChildListScreen());
           } else if (index == 1) {
             return CupertinoTabView(builder: (context) => Search());
-          } else if (index == 2) {
+          } else {
             return CupertinoTabView(builder: (context) => Account());
           }
         },
@@ -100,25 +103,46 @@ class AdaptiveMainScreen extends StatelessWidget {
 class ChildHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text('Home'),);
+    final childProvider = Provider.of<ChildProvider>(context, listen: true);
+    final child = childProvider.initializeChild();
+    _getChild();
+    if (isIOS) {
+      return CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+          middle: Text(child.firstName),
+        ),
+        child: Text('Home'),
+      );
+    } else {
+      return Container();
+    }
   }
 }
 
 class Search extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text('Search'),);
+    return Container(
+      child: Text('Search'),
+    );
   }
 }
 
 class Account extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text('Account'),);
+    if (isIOS) {
+      return Container(
+        child: Text('Account'),
+      );
+    } else {
+      return Container();
+    }
   }
 }
 
 
-
-
-
+_getChild() async {
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  preferences.getInt("childId");
+}
