@@ -138,24 +138,32 @@ class _ChildHomeState extends State<ChildHome> {
   Widget build(BuildContext context) {
     final childProvider = Provider.of<ChildProvider>(context, listen: true);
     if (isIOS) {
-      return FutureBuilder(
-        future: _loadChildName(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return CupertinoPageScaffold(
-              navigationBar: CupertinoNavigationBar(
-                middle: Text('Home Page'),
-              ),
-              child: Text(snapshot.data),
-            );
-          } else {
-            return Container();
-          }
-        },
+      return CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+          middle: Text('Home Page'),
+        ),
+        child: Column(
+          children: <Widget>[
+            getChild()
+          ],
+        ),
       );
     } else {
       return Container();
     }
+  }
+
+  Widget getChild() {
+    return FutureBuilder(
+      future: _loadChildName(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Text(snapshot.data);
+        } else {
+          return Text(widget.child.firstName);
+        }
+      },
+    );
   }
 }
 
@@ -230,15 +238,16 @@ class _AccountState extends State<Account> {
                             ),
                           ),
                           onTap: () {
-                            childProvider.setChild(childListProvider.logChildren[index]);
-//                            Navigator.push(
-//                                context,
-//                                CupertinoPageRoute(
-//                                  builder: (context) => ChildHome(
-//                                        child: childListProvider
-//                                            .logChildren[index],
-//                                      ),
-//                                ));
+                            childProvider
+                                .setChild(childListProvider.logChildren[index]);
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) => ChildHome(
+                                        child: childListProvider
+                                            .logChildren[index],
+                                      ),
+                                ));
                           },
                         ),
                       );

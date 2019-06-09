@@ -33,18 +33,18 @@ class ChildProvider with ChangeNotifier {
 
   Future<void> _saveToSharedPreferences(Child child) async {
     final prefs = await SharedPreferences.getInstance();
-//    await prefs.setInt(_childIdKey, currentChild.id);
+    await prefs.setInt(_childIdKey, currentChild.id);
     await prefs.setString(_childNameKey, child.firstName);
     notifyListeners();
   }
 
   Future<void> _loadFromSharedPrefs() async {
     final prefs = await SharedPreferences.getInstance();
-//    currentChild.id = prefs.getInt(_childIdKey) ?? 999;
     if (currentChild == null) {
       currentChild = new Child("Blank");
     }
     currentChild.firstName = prefs.getString(_childNameKey) ?? "Blank";
+    currentChild.id = prefs.getInt(_childIdKey) ?? 999;
     notifyListeners();
   }
 }
