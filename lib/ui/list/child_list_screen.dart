@@ -1,13 +1,12 @@
-import 'package:baby_assistant/model/child.dart';
+import 'package:baby_assistant/data/model/child.dart';
 import 'package:baby_assistant/ui/child_detail_screen.dart';
-import 'package:baby_assistant/util/child_list_provider.dart';
+import 'package:baby_assistant/data/child_list_provider.dart';
 import 'package:baby_assistant/widget/cupertino_child_dialog.dart';
 import 'package:baby_assistant/widget/material_child_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart' as foundation;
-import 'package:shared_preferences/shared_preferences.dart';
 
 bool get isIOS => foundation.defaultTargetPlatform == TargetPlatform.iOS;
 

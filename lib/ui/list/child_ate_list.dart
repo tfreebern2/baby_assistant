@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:baby_assistant/model/ate_activity.dart';
-import 'package:baby_assistant/model/child.dart';
+import 'package:baby_assistant/data/model/ate_activity.dart';
+import 'package:baby_assistant/data/model/child.dart';
 import 'package:baby_assistant/ui/child_detail_screen.dart';
 import 'package:baby_assistant/util/database_client.dart';
 import 'package:baby_assistant/util/date_helper.dart';

@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'dart:async';
 
-import 'package:baby_assistant/model/ate_activity.dart';
-import 'package:baby_assistant/model/change_activity.dart';
-import 'package:baby_assistant/model/child.dart';
-import 'package:baby_assistant/model/drink_activity.dart';
+import 'package:baby_assistant/data/model/ate_activity.dart';
+import 'package:baby_assistant/data/model/change_activity.dart';
+import 'package:baby_assistant/data/model/child.dart';
+import 'package:baby_assistant/data/model/drink_activity.dart';
 import 'package:baby_assistant/util/date_helper.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';

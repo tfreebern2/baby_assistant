@@ -1,10 +1,9 @@
+import 'package:baby_assistant/util/database_client.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:baby_assistant/model/child.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'database_client.dart';
-
+import 'model/child.dart';
 
 class ChildProvider with ChangeNotifier {
   var db = new DatabaseHelper();

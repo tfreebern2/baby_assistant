@@ -1,7 +1,7 @@
-import 'package:baby_assistant/model/ate_activity.dart';
-import 'package:baby_assistant/model/change_activity.dart';
-import 'package:baby_assistant/model/child.dart';
-import 'package:baby_assistant/model/drink_activity.dart';
+import 'package:baby_assistant/data/model/ate_activity.dart';
+import 'package:baby_assistant/data/model/change_activity.dart';
+import 'package:baby_assistant/data/model/child.dart';
+import 'package:baby_assistant/data/model/drink_activity.dart';
 import 'package:baby_assistant/ui/home.dart';
 import 'package:baby_assistant/ui/list/child_ate_list.dart';
 import 'package:baby_assistant/ui/list/child_change_list.dart';
@@ -12,8 +12,6 @@ import 'package:baby_assistant/widget/fab_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' as foundation;
-
-import '../main.dart';
 import 'log/log_drink_activity.dart';
 
 bool get isIOS => foundation.defaultTargetPlatform == TargetPlatform.iOS;

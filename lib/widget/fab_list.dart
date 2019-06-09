@@ -1,4 +1,4 @@
-import 'package:baby_assistant/model/child.dart';
+import 'package:baby_assistant/data/model/child.dart';
 import 'package:baby_assistant/ui/log/log_ate_activity.dart';
 import 'package:baby_assistant/ui/log/log_change_activity.dart';
 import 'package:baby_assistant/ui/log/log_drink_activity.dart';

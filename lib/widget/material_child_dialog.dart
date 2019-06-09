@@ -1,5 +1,5 @@
-import 'package:baby_assistant/model/child.dart';
-import 'package:baby_assistant/util/child_list_provider.dart';
+import 'package:baby_assistant/data/child_list_provider.dart';
+import 'package:baby_assistant/data/model/child.dart';
 import 'package:baby_assistant/util/database_client.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
