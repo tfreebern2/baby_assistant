@@ -1,5 +1,5 @@
 import 'package:baby_assistant/model/child.dart';
-import 'package:baby_assistant/util/child_provider.dart';
+import 'package:baby_assistant/util/child_list_provider.dart';
 import 'package:baby_assistant/util/database_client.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +84,7 @@ class _CupertinoChildDialogState extends State<CupertinoChildDialog> {
   }
 
   void _handleSubmitted(String text) async {
-    final childList = Provider.of<ChildProvider>(context, listen: true);
+    final childList = Provider.of<ChildListProvider>(context, listen: true);
     _textEditingController.clear();
     Child child = new Child(text);
     childList.addChild(child);

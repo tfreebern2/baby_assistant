@@ -1,6 +1,6 @@
 import 'package:baby_assistant/model/child.dart';
 import 'package:baby_assistant/ui/child_detail_screen.dart';
-import 'package:baby_assistant/util/child_provider.dart';
+import 'package:baby_assistant/util/child_list_provider.dart';
 import 'package:baby_assistant/widget/cupertino_child_dialog.dart';
 import 'package:baby_assistant/widget/material_child_dialog.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,7 +21,7 @@ class ChildListScreen extends StatefulWidget {
 class _ChildListScreenState extends State<ChildListScreen> {
   @override
   Widget build(BuildContext context) {
-    final childList = Provider.of<ChildProvider>(context, listen: true);
+    final childList = Provider.of<ChildListProvider>(context, listen: true);
     if (isIOS) {
       return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
@@ -75,7 +75,6 @@ class _ChildListScreenState extends State<ChildListScreen> {
                           ),
                         ),
                         onTap: () {
-                          _storeChild(childList.logChildren[index].id);
                           childList.setChild(childList.logChildren[index]);
                           Navigator.push(
                               context,
@@ -181,10 +180,4 @@ class _ChildListScreenState extends State<ChildListScreen> {
           return CupertinoChildDialog();
         });
   }
-
-  _storeChild(int childId) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    await preferences.setInt("childId", childId);
-  }
-
 }

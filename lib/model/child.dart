@@ -4,9 +4,17 @@ class Child {
   int _id;
   String _firstName;
 
-  // Getters
   int get id => _id;
+
+  set id(int value) {
+    _id = value;
+  }
+
   String get firstName => _firstName;
+
+  set firstName(String value) {
+    _firstName = value;
+  }
 
   Child.map(dynamic obj) {
     this._id = obj["id"];
