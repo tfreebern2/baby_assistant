@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:baby_assistant/ui/child_detail_screen.dart';
-import 'package:baby_assistant/ui/list/child_list_screen.dart';
 import 'package:baby_assistant/util/child_list_provider.dart';
 import 'package:baby_assistant/util/child_provider.dart';
-import 'package:baby_assistant/util/database_client.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -116,7 +114,7 @@ class ChildHome extends StatefulWidget {
 }
 
 class _ChildHomeState extends State<ChildHome> {
-  String _savedChild;
+  int _savedChild;
 
   @override
   void initState() {
@@ -124,19 +122,20 @@ class _ChildHomeState extends State<ChildHome> {
 //    _loadChildName();
   }
 
-  Future<String> _loadChildName() async {
+  Future<dynamic> _loadChildName(BuildContext context) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    if (preferences.getString('childName') != null &&
-        preferences.getString('childName').isNotEmpty) {
-      return _savedChild = preferences.getString("childName");
+    final childProvider = Provider.of<ChildProvider>(context, listen: true);
+    final childListProvider = Provider.of<ChildListProvider>(context, listen: true);
+    if (preferences.getInt('childId') != null) {
+      return childProvider.getCurrentChild(preferences.getInt("childId"));
     } else {
-      return _savedChild = "Empty";
+      _savedChild = childListProvider.logChildren[0].id;
+      return childProvider.getCurrentChild(_savedChild);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final childProvider = Provider.of<ChildProvider>(context, listen: true);
     if (isIOS) {
       return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
@@ -144,7 +143,7 @@ class _ChildHomeState extends State<ChildHome> {
         ),
         child: Column(
           children: <Widget>[
-            getChild()
+            getChild(context)
           ],
         ),
       );
@@ -153,14 +152,15 @@ class _ChildHomeState extends State<ChildHome> {
     }
   }
 
-  Widget getChild() {
+  Widget getChild(BuildContext context) {
     return FutureBuilder(
-      future: _loadChildName(),
+      future: _loadChildName(context),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          return Text(snapshot.data);
+        if (snapshot.hasData) {
+          Child content = snapshot.data;
+          return Text(content.firstName);
         } else {
-          return Text(widget.child.firstName);
+          return Text("Loading...");
         }
       },
     );

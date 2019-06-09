@@ -3,8 +3,12 @@ import 'package:baby_assistant/model/child.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'database_client.dart';
+
 
 class ChildProvider with ChangeNotifier {
+  var db = new DatabaseHelper();
+
   Child currentChild;
   static const _childIdKey = 'childId';
   static const _childNameKey = 'childName';
@@ -22,9 +26,8 @@ class ChildProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getCurrentChild() {
-    return _loadFromSharedPrefs();
-//    return currentChild;
+  Future<Child> getCurrentChild(int id) {
+    return db.getChild(id);
   }
 
   Future<void> load() {
@@ -33,7 +36,7 @@ class ChildProvider with ChangeNotifier {
 
   Future<void> _saveToSharedPreferences(Child child) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt(_childIdKey, currentChild.id);
+    await prefs.setInt(_childIdKey, child.id);
     await prefs.setString(_childNameKey, child.firstName);
     notifyListeners();
   }

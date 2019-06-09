@@ -37,7 +37,6 @@ class ChildListProvider with ChangeNotifier {
 
   Future<List<Child>> _readChildList() async {
     List children = await db.getChildren();
-    db.close();
     if (children.length > 0) {
       return children.map<Child>((x) => Child.fromMap(x)).toList();
     } else {
